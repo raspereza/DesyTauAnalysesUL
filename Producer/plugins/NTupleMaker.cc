@@ -1059,6 +1059,10 @@ void NTupleMaker::beginJob(){
       tree->Branch("gentau_visible_phi", gentau_visible_phi, "tau_visible_phi[gentau_count]/F");
       tree->Branch("gentau_visible_mass", gentau_visible_mass, "tau_visible_mass[gentau_count]/F");
 
+      tree->Branch("gentau_vx", gentau_vx, "gentau_vx[gentau_count]/F");
+      tree->Branch("gentau_vy", gentau_vy, "gentau_vy[gentau_count]/F");
+      tree->Branch("gentau_vz", gentau_vz, "gentau_vz[gentau_count]/F");
+
       tree->Branch("gentau_visibleNoLep_e",  gentau_visibleNoLep_e,  "tau_visibleNoLep_e[gentau_count]/F");
       tree->Branch("gentau_visibleNoLep_pt",  gentau_visibleNoLep_pt,  "tau_visibleNoLep_pt[gentau_count]/F");
       tree->Branch("gentau_visibleNoLep_eta", gentau_visibleNoLep_eta, "tau_visibleNoLep_eta[gentau_count]/F");
@@ -3035,6 +3039,7 @@ bool NTupleMaker::AddGenParticles(const edm::Event& iEvent) {
 	      if(HasAnyMother(&(*GenParticles)[i], 15) > 0) {info |= 1<<2; mother=TAU;}
 	      if(HasAnyMother(&(*GenParticles)[i], 25) > 0 || HasAnyMother(&(*GenParticles)[i], 35) > 0 ||
 		 HasAnyMother(&(*GenParticles)[i], 36) > 0) {info |= 1<<3; mother=HIGGS;}
+        if(HasAnyMother(&(*GenParticles)[i], 1000015) > 0) {info |= 1<<4;mother=STAU;}
 	      //	      std::cout << "GenMuon : " << (*GenParticles)[i].pdgId()
 	      //			<< "   pt = " << (*GenParticles)[i].pt()
 	      //			<< "   eta = " << (*GenParticles)[i].eta()
@@ -3050,6 +3055,7 @@ bool NTupleMaker::AddGenParticles(const edm::Event& iEvent) {
 	      if(HasAnyMother(&(*GenParticles)[i], 15) > 0) {info |= 1<<2; mother=TAU;}
 	      if(HasAnyMother(&(*GenParticles)[i], 25) > 0 || HasAnyMother(&(*GenParticles)[i], 35) > 0 ||
                  HasAnyMother(&(*GenParticles)[i], 36) > 0) {info |= 1<<3; mother=HIGGS;}
+        if(HasAnyMother(&(*GenParticles)[i], 1000015) > 0) {info |= 1<<4;mother=STAU;}
 	      //	      std::cout << "GenElectron : " << (*GenParticles)[i].pdgId()
 	      //			<< "   pt = " << (*GenParticles)[i].pt()
 	      //			<< "   eta = " << (*GenParticles)[i].eta()
@@ -3065,6 +3071,7 @@ bool NTupleMaker::AddGenParticles(const edm::Event& iEvent) {
 	      if(HasAnyMother(&(*GenParticles)[i], 15) > 0) {info |= 1<<2; mother=TAU;}
 	      if(HasAnyMother(&(*GenParticles)[i], 25) > 0 || HasAnyMother(&(*GenParticles)[i], 35) > 0 ||
                  HasAnyMother(&(*GenParticles)[i], 36) > 0) {info |= 1<<3; mother=HIGGS;}
+        if(HasAnyMother(&(*GenParticles)[i], 1000015) > 0) {info |= 1<<4;mother=STAU;}
 	      //	      std::cout << "GenTau : "
 	      //	       		<< "   pt = " << (*GenParticles)[i].pt()
 	      //	       		<< "   eta = " << (*GenParticles)[i].eta()
@@ -3091,6 +3098,10 @@ bool NTupleMaker::AddGenParticles(const edm::Event& iEvent) {
 	      gentau_visible_py[gentau_count] = tau_visible_p4.py();
 	      gentau_visible_pz[gentau_count] = tau_visible_p4.pz();
 	      gentau_visible_e[gentau_count]  = tau_visible_p4.energy();
+
+	      gentau_vx[gentau_count] = (*GenParticles)[i].vx();
+	      gentau_vy[gentau_count] = (*GenParticles)[i].vy();
+	      gentau_vz[gentau_count] = (*GenParticles)[i].vz();
 
 	      gentau_visible_pt[gentau_count]   = tau_visible_p4.pt();
 	      gentau_visible_eta[gentau_count]  = tau_visible_p4.eta();
@@ -3145,6 +3156,7 @@ bool NTupleMaker::AddGenParticles(const edm::Event& iEvent) {
 		if(HasAnyMother(&(*GenParticles)[i], 23) > 0 || HasAnyMother(&(*GenParticles)[i], 22) > 0) {info |= 1<<0;mother=ZBOSON;}
 		if(HasAnyMother(&(*GenParticles)[i], 24) > 0) {info |= 1<<1;mother=WBOSON;}
 		if(HasAnyMother(&(*GenParticles)[i], 15) > 0) {info |= 1<<2;mother=TAU;}
+    if(HasAnyMother(&(*GenParticles)[i], 1000015) > 0) {info |= 1<<4;mother=STAU;}
 		//		std::cout << "GenNeutrino : " << (*GenParticles)[i].pdgId()
 		//		 	  << "   pt = " << (*GenParticles)[i].pt()
 		//		 	  << "   eta = " << (*GenParticles)[i].eta()
@@ -3231,6 +3243,7 @@ bool NTupleMaker::AddGenParticles(const edm::Event& iEvent) {
 	    if(HasAnyMother(&(*GenParticles)[i], 25) > 0||
 	       HasAnyMother(&(*GenParticles)[i], 35) > 0||
 	       HasAnyMother(&(*GenParticles)[i], 36) > 0) {info |= 1<<3;mother=HIGGS;}
+      if(HasAnyMother(&(*GenParticles)[i], 1000015) > 0) {info |= 1<<4;mother=STAU;}
 	    fill = true;
 	  }
 

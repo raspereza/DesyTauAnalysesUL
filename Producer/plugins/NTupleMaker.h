@@ -276,7 +276,7 @@ class NTupleMaker : public edm::EDAnalyzer{
 
 
  private:
-  enum MotherNames{HIGGS=1, WBOSON, ZBOSON, TAU};
+  enum MotherNames{HIGGS=1, WBOSON, ZBOSON, TAU, STAU};
   enum MvaMetChannel{EMU=1, ETAU, MUTAU, TAUTAU, MUMU, EE, UNKNOWN};
 
   virtual void beginJob();
@@ -1035,6 +1035,10 @@ class NTupleMaker : public edm::EDAnalyzer{
   Float_t gentau_pz[M_taumaxcount];
   Float_t gentau_e[M_taumaxcount];
   Float_t gentau_charge[M_taumaxcount];
+
+  Float_t gentau_vx[M_taumaxcount];
+  Float_t gentau_vy[M_taumaxcount];
+  Float_t gentau_vz[M_taumaxcount];
 
   Float_t gentau_visible_px[M_taumaxcount];
   Float_t gentau_visible_py[M_taumaxcount];
