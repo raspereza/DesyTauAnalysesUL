@@ -87,3 +87,28 @@ Other variables are introduced for dedicated analyses, e.g. `isHiggsSignal` for 
 
 Suggestions: please rename python and grid-control config files before starting the ntuple production as it helps keeping track of what was used for a specific NTuple campaign.
 
+Once everything is set up you can run grid-control with the following command
+```bash
+/path/to/grid-control/go.py -Gc gc_config.cfg
+```
+The options **-G** is used to activate the GUI and see the jobs submission and status being updated over time, while the option **-c** is used to run in continuous mode.
+
+## FAQ on jobs failing
+
+Several things can go wrong when submitting jobs with grid-control:
+
+### Grid-control does not start
+Possible reasons:
+* In your local environment you use a different version of python with respect to the one used for grid-control.
+  * Suggested solution: You can run `cmsenv` in a CMSSW environment, this should fix the python dependencies
+* Proxy not found:
+  * You probably either have not set up the CMS-VO proxy, or set it up in a directory which grid-control cannot access
+  * Suggested solution: run `export X509_USER_PROXY=~/public/x509_voms; voms-proxy-init -voms cms -valid 48:00`
+
+### Grid-control starts but jobs quickly move between RUNNING and ABORTED
+* Before doing any check on the outputs try looking at the format of the date in your current locale
+  * This is one of the most annoying things, when submitting a job to HTCondor the system is asked for the date and time BUT does not request any specific format for them, it just takes the default
+  * What most likely it's happening is that either the **format** or the **language** of the date are incorrect:
+  * Suggested solutions:
+   * (Format problem) Check if you are using the *testing* branch of grid-control, if not reinstall your version of grid-control
+   * (Language problem) Check the language of the date with the command `date` or `echo $LC_TIME` if the date is not in English or the locale is set to anything but en_US.UTF-8 then run `export LC_TIME=en_US.UTF-8` and retry running grid-control
