@@ -72,8 +72,13 @@ The config files are named `gc_DATA.cfg` and `gc_MC.cfg`, the areas to be edited
 * `nickname config`: python config file (`TreeProducer.py`) to be used for production.
 * `nickname lumi filter`: Json lumi file turned into txt format, to be used when running on DATA.
 * `events per job`: number of events stored in output tree. Recommended values
-  * Signal samples: 10000-20000
-  * Data/MC: 20000-50000 
+  * Signal samples: 10000 (recommended value)
+  * Data/MC: 25000 (recommended value)
+
+The following options can be changed also after grid-control has been initialized: 
+* `wall time`: maximum runtime for the job, keep to 2:59:00 in order for the jobs to be submitted on the short queue. Increase in case jobs fail continuously with exit code **-1**
+* `memory`: maximum memory usage for the job, keep 2000 in order for the jobs to be submitted on the short queue. Increase in case jobs fail continuously with exit code **-1**
+* `max retry`: failed jobs are resubmitted automatically by grid-control, this automatic resubmission stops once they reach the maximum number of retries. Keep at 0 at the beginning, increase after fixing job failure cause. 
 
 
 
@@ -110,5 +115,15 @@ Possible reasons:
   * This is one of the most annoying things, when submitting a job to HTCondor the system is asked for the date and time BUT does not request any specific format for them, it just takes the default
   * What most likely it's happening is that either the **format** or the **language** of the date are incorrect:
   * Suggested solutions:
-   * (Format problem) Check if you are using the *testing* branch of grid-control, if not reinstall your version of grid-control
+   * (Format problem) Check if you are using the *testing* branch of grid-control. If not, then try to clone again grid-control with `git clone https://github.com/grid-control/grid-control.git -b testing`
    * (Language problem) Check the language of the date with the command `date` or `echo $LC_TIME` if the date is not in English or the locale is set to anything but en_US.UTF-8 then run `export LC_TIME=en_US.UTF-8` and retry running grid-control
+
+### Jobs fail
+Check the exit code, here is a list of the most common ones and the suggested actions to take:
+* **-1**: relaunch the job a few time, the most common cause of this error is that the job took too long to run or required more memory than the allocated one. It can also happen if the communication with the server where the dataset is stored is slow. If this persists after 3 failed attempts, just increase  `wall time` and `memory`
+* **92**: problems in retrieving the dataset. Check using DAS if the dataset is completely replicated at T2_DE_DESY (an example of search query on das can be found [here](https://cmsweb.cern.ch/das/request?instance=prod/global&input=site+dataset%3D%2FGluGluHToTauTauUncorrelatedDecay_Filtered_M125_TuneCUETP8M1_13TeV-powheg-pythia8%2FRunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1%2FMINIAODSIM)). File replica at T2_DE_DESY should be 100%, if it's not then request a rucio transfer.
+* **106**: problems with writing the output files to the `se path`. Check if the directory you are trying to write to exists.
+Other exit codes can be found at the following links:
+* [twiki/CMSPublic/StandardExitCodes](https://twiki.cern.ch/twiki/bin/view/CMSPublic/StandardExitCodes)
+* [grid-control official documentation](http://www-ekp.physik.uni-karlsruhe.de/~berger/gc/reference.html#error-codes)
+
