@@ -28,6 +28,11 @@ scram b -j 8
 
 cd ${CMSSW_BASE}/src
 
+git clone https://github.com/svfit/ClassicSVfit TauAnalysis/ClassicSVfit -b fastMTT_19_02_2019
+git clone https://github.com/svfit/SVfitTF TauAnalysis/SVfitTF
+
+cd ${CMSSW_BASE}/src
+
 scram b -j 16
 scram b -j 16
 
