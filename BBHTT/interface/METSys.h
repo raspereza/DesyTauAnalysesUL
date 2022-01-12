@@ -7,10 +7,10 @@
 #define addvar(name, value, key, type) name[key] = value; this->Add( &this->name[key], #name, key, #type)
 
 #include <TLorentzVector.h>
-#include <DesyTauAnalyses/NTupleMaker/interface/functions.h>
-#include <DesyTauAnalyses/NTupleMaker/interface/Systematics_WIP.h>
-#include "DesyTauAnalyses/NTupleMaker/interface/Config.h"
-#include "DesyTauAnalyses/NTupleMaker/interface/AC1B.h"
+#include <DesyTauAnalyses/Common/interface/functions.h>
+#include <DesyTauAnalyses/BBHTT/interface/Systematics.h>
+#include "DesyTauAnalyses/Common/interface/Config.h"
+#include "DesyTauAnalyses/Common/interface/AC1B.h"
 #include <TString.h>
 
 
@@ -18,7 +18,7 @@ class METSys : public Systematics {
  public:
   
   METSys() {};
-  METSys(Synch17Tree* c, TString name){
+  METSys(SynchTree* c, TString name){
     cenTree = c;
     label = "CMS_met" + name + "_13TeV";
     this->Init(cenTree);
@@ -70,7 +70,7 @@ class METSys : public Systematics {
   } obs;
 
 
-  virtual void Init(Synch17Tree* c){
+  virtual void Init(SynchTree* c){
     cenTree = c;
     this->InitTree("Up");
     this->InitTree("Down");

@@ -1,14 +1,14 @@
 #ifndef NTupleMakerLepTauFunctions_h
 #define NTupleMakerLepTauFunctions_h
 
-#include "DesyTauAnalyses/NTupleMaker/interface/Config.h"
-#include "DesyTauAnalyses/NTupleMaker/interface/AC1B.h"
-#include "DesyTauAnalyses/NTupleMaker/interface/Synch17Tree.h"
-#include "DesyTauAnalyses/NTupleMaker/interface/functions.h"
+#include "DesyTauAnalyses/Common/interface/Config.h"
+#include "DesyTauAnalyses/Common/interface/AC1B.h"
+#include "DesyTauAnalyses/BBHTT/interface/SynchTree.h"
+#include "DesyTauAnalyses/Common/interface/functions.h"
 #include "CondFormats/BTauObjects/interface/BTagCalibration.h"
 #include "CondTools/BTau/interface/BTagCalibrationReader.h"
-#include "DesyTauAnalyses/NTupleMaker/interface/JESUncertainties.h"
-#include "DesyTauAnalyses/NTupleMaker/interface/Jets.h"
+#include "DesyTauAnalyses/BBHTT/interface/JESUncertainties.h"
+#include "DesyTauAnalyses/Common/interface/Jets.h"
 #include "JetMETCorrections/Modules/interface/JetResolution.h"
 
 struct btag_scaling_inputs{
@@ -249,7 +249,7 @@ namespace jets{
     }
   }
 
- void counting_jets(const AC1B *analysisTree, Synch17Tree *otree, const Config *cfg, const btag_scaling_inputs *inputs_btag_scaling, 
+ void counting_jets(const AC1B *analysisTree, SynchTree *otree, const Config *cfg, const btag_scaling_inputs *inputs_btag_scaling, 
 		    TString JESname = "central", TString direction = "None",  JESUncertainties * jecUncertainties = 0){
 
    float MaxBJetPt = 1000.;

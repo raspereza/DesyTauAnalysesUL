@@ -5,11 +5,11 @@
 #define BtagSys_h
 
 #define addvar(name, value, key, type) name[key] = value; this->Add( &this->name[key], #name, key, #type)
-#include "DesyTauAnalyses/NTupleMaker/interface/Config.h"
-#include "DesyTauAnalyses/NTupleMaker/interface/AC1B.h"
-#include <DesyTauAnalyses/NTupleMaker/interface/functions.h>
-#include <DesyTauAnalyses/NTupleMaker/interface/leptau_jets_WIP.h>
-#include <DesyTauAnalyses/NTupleMaker/interface/Systematics_WIP.h>
+#include "DesyTauAnalyses/Common/interface/Config.h"
+#include "DesyTauAnalyses/Common/interface/AC1B.h"
+#include <DesyTauAnalyses/Common/interface/functions.h>
+#include <DesyTauAnalyses/BBHTT/interface/leptau_jets.h>
+#include <DesyTauAnalyses/BBHTT/interface/Systematics.h>
 
 using namespace utils;
 
@@ -18,7 +18,7 @@ public:
   
   BtagSys(){};
   
-  BtagSys(Synch17Tree* c, TString name){
+  BtagSys(SynchTree* c, TString name){
     cenTree = c;
     label = "CMS_eff_b_13TeV";    
     if (name=="Mistag")
@@ -61,7 +61,7 @@ void SetUncertaintyName(TString name){
 
 protected:
 
-  virtual void Init(Synch17Tree* c){
+  virtual void Init(SynchTree* c){
     cenTree = c;
 
     this->InitTree("Up");

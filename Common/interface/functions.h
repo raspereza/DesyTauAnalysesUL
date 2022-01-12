@@ -5,7 +5,7 @@
 #include "DesyTauAnalyses/Common/interface/Config.h"
 #include "DesyTauAnalyses/Common/interface/AC1B.h"
 #include "HTT-utilities/RecoilCorrections/interface/RecoilCorrector.h"
-//#include "HTT-utilities/RecoilCorrections_KIT/interface/RecoilCorrector.h"
+#include "HTT-utilities/RecoilCorrections_KIT/interface/RecoilCorrector.h"
 #include "TauAnalysis/SVfitStandalone/interface/SVfitStandaloneAlgorithm.h"
 
 const double MuMass = 0.105658367;

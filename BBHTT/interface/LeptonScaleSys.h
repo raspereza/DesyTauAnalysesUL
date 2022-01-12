@@ -8,9 +8,9 @@
 
 #include "TH2D.h"
 
-#include <DesyTauAnalyses/NTupleMaker/interface/functions.h>
-#include <DesyTauAnalyses/NTupleMaker/interface/Systematics.h>
-#include "DesyTauAnalyses/NTupleMaker/interface/AC1B.h"
+#include <DesyTauAnalyses/Common/interface/functions.h>
+#include <DesyTauAnalyses/BBHTT/interface/Systematics.h>
+#include "DesyTauAnalyses/Common/interface/AC1B.h"
 
 using namespace utils;
 
@@ -19,7 +19,7 @@ public:
   
   LeptonScaleSys(){};
   
-  LeptonScaleSys(Synch17Tree* c){
+  LeptonScaleSys(SynchTree* c){
     cenTree = c;
     label = "lScale";
     usePuppiMET = true;
@@ -106,7 +106,7 @@ public:
   }  
 
 protected:
-  virtual void Init(Synch17Tree* c){
+  virtual void Init(SynchTree* c){
     cenTree = c;
 
     this->InitSF();
@@ -407,7 +407,7 @@ class MuonScaleSys : public LeptonScaleSys {
 public:
   MuonScaleSys(){};
   
-  MuonScaleSys(Synch17Tree* c){
+  MuonScaleSys(SynchTree* c){
     cenTree = c;
     label = "CMS_scale_mu_13TeV";
     
@@ -510,7 +510,7 @@ class ElectronScaleSys : public LeptonScaleSys {
 public:
   ElectronScaleSys(){};
 
-  ElectronScaleSys(Synch17Tree* c){
+  ElectronScaleSys(SynchTree* c){
     cenTree = c;
     label = "CMS_scale_e_13TeV";
     
@@ -693,7 +693,7 @@ class ElectronResSys : public LeptonScaleSys {
  public:
   ElectronResSys(){};
 
-  ElectronResSys(Synch17Tree* c){
+  ElectronResSys(SynchTree* c){
     cenTree = c;
     label = "CMS_res_e_13TeV";
     
@@ -759,7 +759,7 @@ class ElectronEBScaleSys : public ElectronScaleSys {
 public:
   ElectronEBScaleSys(){};
   
-  ElectronEBScaleSys(Synch17Tree* c){
+  ElectronEBScaleSys(SynchTree* c){
     cenTree = c;
     label = "CMS_scale_eEB_13TeV";
     
@@ -796,7 +796,7 @@ class ElectronEEScaleSys : public ElectronScaleSys {
 public:
   ElectronEEScaleSys(){};
   
-  ElectronEEScaleSys(Synch17Tree* c){
+  ElectronEEScaleSys(SynchTree* c){
     cenTree = c;
     label = "CMS_scale_eEE_13TeV";
     
@@ -834,7 +834,7 @@ class TauScaleSys : public LeptonScaleSys {
 public:
   TauScaleSys(){};
   
-  TauScaleSys(Synch17Tree* c){
+  TauScaleSys(SynchTree* c){
     cenTree = c;
     label = "CMS_shape_t_13TeV";
     
@@ -938,7 +938,7 @@ class TauOneProngScaleSys : public LeptonScaleSys {
 public:
   TauOneProngScaleSys(){};
   
-  TauOneProngScaleSys(Synch17Tree* c){
+  TauOneProngScaleSys(SynchTree* c){
     cenTree = c;
     label = "CMS_scale_t_1prong_13TeV";
     
@@ -1048,7 +1048,7 @@ class TauOneProngOnePi0ScaleSys : public LeptonScaleSys {
 public:
   TauOneProngOnePi0ScaleSys(){};
   
-  TauOneProngOnePi0ScaleSys(Synch17Tree* c){
+  TauOneProngOnePi0ScaleSys(SynchTree* c){
     cenTree = c;
     label = "CMS_scale_t_1prong1pizero_13TeV";
     
@@ -1159,7 +1159,7 @@ class TauThreeProngScaleSys : public LeptonScaleSys {
 public:
   TauThreeProngScaleSys(){};
   
-  TauThreeProngScaleSys(Synch17Tree* c){
+  TauThreeProngScaleSys(SynchTree* c){
     cenTree = c;
     label = "CMS_scale_t_3prong_13TeV";
     
@@ -1269,7 +1269,7 @@ class TauThreeProngOnePi0ScaleSys : public LeptonScaleSys {
 public:
   TauThreeProngOnePi0ScaleSys(){};
   
-  TauThreeProngOnePi0ScaleSys(Synch17Tree* c){
+  TauThreeProngOnePi0ScaleSys(SynchTree* c){
     cenTree = c;
     label = "CMS_scale_t_3prong1pizero_13TeV";
     
@@ -1379,7 +1379,7 @@ class LepTauFakeScaleSys : public LeptonScaleSys {
 public:
   LepTauFakeScaleSys(){};
   
-  LepTauFakeScaleSys(Synch17Tree* c){
+  LepTauFakeScaleSys(SynchTree* c){
     cenTree = c;
     label = "CMS_htt_ZLShape_13TeV";
     
@@ -1463,7 +1463,7 @@ class LepTauFakeOneProngScaleSys : public LeptonScaleSys {
 public:
   LepTauFakeOneProngScaleSys(){};
   
-  LepTauFakeOneProngScaleSys(Synch17Tree* c){
+  LepTauFakeOneProngScaleSys(SynchTree* c){
     cenTree = c;
     label = "CMS_htt_ZLShape_1prong_13TeV";
     
@@ -1536,7 +1536,7 @@ class LepTauFakeOneProngOnePi0ScaleSys : public LeptonScaleSys {
 public:
   LepTauFakeOneProngOnePi0ScaleSys(){};
   
-  LepTauFakeOneProngOnePi0ScaleSys(Synch17Tree* c){
+  LepTauFakeOneProngOnePi0ScaleSys(SynchTree* c){
     cenTree = c;
     label = "CMS_htt_ZLShape_1prong1pi_13TeV";
     
@@ -1608,7 +1608,7 @@ class LepTauFakeThreeProngScaleSys : public LeptonScaleSys {
 public:
   LepTauFakeThreeProngScaleSys(){};
   
-  LepTauFakeThreeProngScaleSys(Synch17Tree* c){
+  LepTauFakeThreeProngScaleSys(SynchTree* c){
     cenTree = c;
     label = "CMS_htt_ZLShape_3prong_13TeV";
     
@@ -1692,7 +1692,7 @@ class LepTauFakeThreeProngOnePi0ScaleSys : public LeptonScaleSys {
 public:
   LepTauFakeThreeProngOnePi0ScaleSys(){};
   
-  LepTauFakeThreeProngOnePi0ScaleSys(Synch17Tree* c){
+  LepTauFakeThreeProngOnePi0ScaleSys(SynchTree* c){
     cenTree = c;
     label = "CMS_htt_ZLShape_3prong1pizero_13TeV";
     

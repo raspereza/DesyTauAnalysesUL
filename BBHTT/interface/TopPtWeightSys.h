@@ -8,8 +8,8 @@
 
 #include "TH2D.h"
 
-#include <DesyTauAnalyses/NTupleMaker/interface/functions.h>
-#include <DesyTauAnalyses/NTupleMaker/interface/Systematics.h>
+#include <DesyTauAnalyses/Common/interface/functions.h>
+#include <DesyTauAnalyses/BBHTT/interface/Systematics.h>
 
 using namespace utils;
 
@@ -18,7 +18,7 @@ public:
   
   TopPtWeightSys(){};
   
-  TopPtWeightSys(Synch17Tree* c){
+  TopPtWeightSys(SynchTree* c){
     cenTree = c;
     label = "topPtWeight";
     
@@ -42,7 +42,7 @@ public:
   };
   
 protected:
-  virtual void Init(Synch17Tree* c){
+  virtual void Init(SynchTree* c){
     cenTree = c;
 
     this->InitTree("Up");

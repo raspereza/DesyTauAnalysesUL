@@ -13,15 +13,15 @@
 
 #define expectedtauspinnerweights 5
 double MassFromTString(TString sample);
-void initializeGenTree(Synch17GenTree *gentree);
-void FillVertices(const AC1B * analysisTree,Synch17Tree *otree, const bool isData);
-void FillGenTree(const AC1B * analysisTree, Synch17GenTree *gentree);
+void initializeGenTree(SynchGenTree *gentree);
+void FillVertices(const AC1B * analysisTree,SynchTree *otree, const bool isData);
+void FillGenTree(const AC1B * analysisTree, SynchGenTree *gentree);
 float getEmbeddedWeight(const AC1B * analysisTree, RooWorkspace* WS);
 float getEmbeddedWeightKIT(const AC1B * analysisTree, RooWorkspace* WS, int era);
-void FillElMu(const AC1B *analysisTree, Synch17Tree *otree, int electronIndex, float dRisoElectron, int muonIndex, float dRIsoMuon, int era, bool isEmbedded, bool isMcCorrectPuppi);
+void FillElMu(const AC1B *analysisTree, SynchTree *otree, int electronIndex, float dRisoElectron, int muonIndex, float dRIsoMuon, int era, bool isEmbedded, bool isMcCorrectPuppi);
 
-void getHiggsPtWeight(const AC1B * analysisTree, Synch17Tree * tree, RooWorkspace * ws, double mass);
-void CorrectPuppiMET(const AC1B * analysisTree, Synch17Tree * otree, double scale);
+void getHiggsPtWeight(const AC1B * analysisTree, SynchTree * tree, RooWorkspace * ws, double mass);
+void CorrectPuppiMET(const AC1B * analysisTree, SynchTree * otree, double scale);
 
 bool accessTriggerInfo(const AC1B * analysisTree, TString HLTFilterName, unsigned int &nHLTFilter)
 {
@@ -125,9 +125,9 @@ bool triggerMatching(AC1B * analysisTree, Float_t eta, Float_t phi, bool isFilte
    return trigMatch;
 }
 
-void GetPuppiMET(AC1B * analysisTree, Synch17Tree * otree, int era, bool isEmbedded, bool isData, bool isMcCorrectPuppi, bool smearMET); 
+void GetPuppiMET(AC1B * analysisTree, SynchTree * otree, int era, bool isEmbedded, bool isData, bool isMcCorrectPuppi, bool smearMET); 
 
-void GetPFMET(AC1B * analysisTree, Synch17Tree * otree);
+void GetPFMET(AC1B * analysisTree, SynchTree * otree);
 
 // Synch ntuple producer in the e+mu channel
 
@@ -573,8 +573,8 @@ int main(int argc, char * argv[]){
   
   TTree *tree = new TTree("TauCheck", "TauCheck");
   //  TTree *gtree = new TTree("GenTauCheck", "GenTauCheck");
-  Synch17Tree *otree = new Synch17Tree(tree,"em",isGGH);
-  //  Synch17GenTree *gentree = new Synch17GenTree(gtree);
+  SynchTree *otree = new SynchTree(tree,"em",isGGH);
+  //  SynchGenTree *gentree = new SynchGenTree(gtree);
 
   int nTotalFiles = 0;
   int nEvents = 0;
@@ -1777,7 +1777,7 @@ int main(int argc, char * argv[]){
 
 //// FILLING FUNCTIONS //////
 
-void FillVertices(const AC1B *analysisTree, Synch17Tree *otree, const bool isData){
+void FillVertices(const AC1B *analysisTree, SynchTree *otree, const bool isData){
 
   otree->RecoVertexX = analysisTree->primvertex_x;
   otree->RecoVertexY = analysisTree->primvertex_y;
@@ -1899,7 +1899,7 @@ float getEmbeddedWeightKIT(const AC1B *analysisTree, RooWorkspace * wEm, int era
 
 }
 
-void initializeGenTree(Synch17GenTree *gentree){
+void initializeGenTree(SynchGenTree *gentree){
   gentree->Higgs_pt=-9999;
   gentree->Higgs_eta=-9999;
   gentree->Higgs_phi=-9999;
@@ -1918,7 +1918,7 @@ void initializeGenTree(Synch17GenTree *gentree){
 
 }
 
-void FillGenTree(const AC1B *analysisTree, Synch17GenTree *gentree){
+void FillGenTree(const AC1B *analysisTree, SynchGenTree *gentree){
   int ntaus=analysisTree->gentau_count;
   int npart=analysisTree->genparticles_count;
   int leptonid=15;
@@ -2018,7 +2018,7 @@ void FillGenTree(const AC1B *analysisTree, Synch17GenTree *gentree){
 }
 
 //fill the otree with the electron/muon variables in channel emu
-void FillElMu(const AC1B *analysisTree, Synch17Tree *otree, int electronIndex, float dRIsoElectron, int muonIndex, float dRIsoMuon, int era, bool isEmbedded, bool isMcCorrectPuppi){
+void FillElMu(const AC1B *analysisTree, SynchTree *otree, int electronIndex, float dRIsoElectron, int muonIndex, float dRIsoMuon, int era, bool isEmbedded, bool isMcCorrectPuppi){
   
   float sf_eleES = 1.;
   if (isEmbedded) sf_eleES = EmbedElectronES_SF(analysisTree, era, electronIndex);  
@@ -2078,7 +2078,7 @@ double MassFromTString(TString sample) {
   
 }
 
-void GetPFMET(AC1B * analysisTree, Synch17Tree * otree) {
+void GetPFMET(AC1B * analysisTree, SynchTree * otree) {
 
   otree->met = TMath::Sqrt(analysisTree->pfmetcorr_ex*analysisTree->pfmetcorr_ex +
 			   analysisTree->pfmetcorr_ey*analysisTree->pfmetcorr_ey);
@@ -2091,7 +2091,7 @@ void GetPFMET(AC1B * analysisTree, Synch17Tree * otree) {
 
 }
 
-void GetPuppiMET(AC1B * analysisTree, Synch17Tree * otree, int era, bool isData, bool isEmbedded, bool isMcCorrectPuppi, bool smearMET) {
+void GetPuppiMET(AC1B * analysisTree, SynchTree * otree, int era, bool isData, bool isEmbedded, bool isMcCorrectPuppi, bool smearMET) {
 
   bool is2017 = false;
 
@@ -2205,7 +2205,7 @@ void GetPuppiMET(AC1B * analysisTree, Synch17Tree * otree, int era, bool isData,
 
 }
 
-void CorrectPuppiMET(const AC1B * analysisTree, Synch17Tree * otree, double scale) {
+void CorrectPuppiMET(const AC1B * analysisTree, SynchTree * otree, double scale) {
 
   TLorentzVector neutrinos4; neutrinos4.SetXYZT(0.,0.,0.,0.);
   for (unsigned int i=0; i<analysisTree->genparticles_count; ++i) {
@@ -2253,7 +2253,7 @@ void CorrectPuppiMET(const AC1B * analysisTree, Synch17Tree * otree, double scal
 
 }
 
-void getHiggsPtWeight(const AC1B * analysisTree, Synch17Tree * otree, RooWorkspace * ws, double mass) {
+void getHiggsPtWeight(const AC1B * analysisTree, SynchTree * otree, RooWorkspace * ws, double mass) {
 
   for (unsigned int i=0; i<30; ++i)
     otree->ggHWeights[i] = 1.0;

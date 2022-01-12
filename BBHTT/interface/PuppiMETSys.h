@@ -1,9 +1,9 @@
 #ifndef PuppiMETSys_h
 #define PuppiMETSys_h
 
-#include "DesyTauAnalyses/NTupleMaker/interface/METSys_WIP.h"
+#include "DesyTauAnalyses/BBHTT/interface/METSys.h"
 #include "HTT-utilities/RecoilCorrections_KIT/interface/MEtSys.h"
-#include "DesyTauAnalyses/NTupleMaker/interface/functions.h"
+#include "DesyTauAnalyses/Common/interface/functions.h"
 
 using namespace kit;
 
@@ -11,7 +11,7 @@ class PuppiMETSys : public METSys {
 
  public:
   PuppiMETSys(){};
-  PuppiMETSys(Synch17Tree* c, TString name) {
+  PuppiMETSys(SynchTree* c, TString name) {
     cenTree = c;
     label = name;
     this->Init(cenTree);

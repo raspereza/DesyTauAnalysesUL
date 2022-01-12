@@ -1,13 +1,13 @@
 #ifndef PFMETSys_h
 #define PFMETSys_h
 
-#include "DesyTauAnalyses/NTupleMaker/interface/METSys_WIP.h"
+#include "DesyTauAnalyses/BBHTT/interface/METSys.h"
 
 class PFMETSys : public METSys {
 
  public:
   PFMETSys(){};
-  PFMETSys(Synch17Tree* c, TString name) {
+  PFMETSys(SynchTree* c, TString name) {
     cenTree = c;
     label = "CMS_met_"+name+"_13TeV";
     this->Init(cenTree);

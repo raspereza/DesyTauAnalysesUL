@@ -8,7 +8,7 @@
 #include "DesyTauAnalyses/BBHTT/interface/SynchTree.h"
 #include "DesyTauAnalyses/BBHTT/interface/SynchGenTree.h"
 #include "DesyTauAnalyses/Common/interface/functions.h"
-#include "DesyTauAnalyses/BBHTT/interface/PileUp.h"
+#include "DesyTauAnalyses/Common/interface/PileUp.h"
 #include "HiggsCPinTauDecays/ImpactParameter/interface/ImpactParameter.h"
 #include "HiggsCPinTauDecays/IpCorrection/interface/IpCorrection.h"
 //#include "DesyTauAnalyses/BBHTT/interface/functionsSynch2017.h"
@@ -21,18 +21,18 @@
 
 typedef ROOT::Math::SMatrix<float,5,5, ROOT::Math::MatRepSym<float,5>> SMatrixSym5F;
 
-void acott(const AC1B * analysisTree, Synch17Tree *otree, int tauIndex1, int tauIndex2);
+void acott(const AC1B * analysisTree, SynchTree *otree, int tauIndex1, int tauIndex2);
 
-void acott_Impr(const AC1B * analysisTree, Synch17Tree *otree, int tauIndex1, int tauIndex2,TString ch, int era, bool isEmbedded, std::map<TString,IpCorrection*> ipCorrectors);
+void acott_Impr(const AC1B * analysisTree, SynchTree *otree, int tauIndex1, int tauIndex2,TString ch, int era, bool isEmbedded, std::map<TString,IpCorrection*> ipCorrectors);
 TLorentzVector chargedPivec(const AC1B * analysisTree, int tauIndex);
 TLorentzVector neutralPivec(const AC1B * analysisTree, int tauIndex);
 TLorentzVector charged_constituents_P4(const AC1B * analysisTree, int tauIndex);
 std::vector<TLorentzVector> a1_rho_pi(const AC1B * analysisTree, int tauIndex);
-//TLorentzVector ipVec(const AC1B * analysisTree, int tauIndex, Synch17Tree *otree);
+//TLorentzVector ipVec(const AC1B * analysisTree, int tauIndex, SynchTree *otree);
 TLorentzVector ipVec(const AC1B * analysisTree, int lepIndex, int tauIndex, TString ch, int vertexType); //iP vec of hadronic tau, lepIndex required to get refitted PV with BS
 int chargedPiIndex(const AC1B * analysisTree, int tauIndex);
 
-void gen_acott(const AC1B * analysisTree, Synch17Tree *otree, int tauIndex1, int tauIndex2);
+void gen_acott(const AC1B * analysisTree, SynchTree *otree, int tauIndex1, int tauIndex2);
 TLorentzVector gen_chargedPivec(const AC1B * analysisTree, int tauIndex, int partId);
 TLorentzVector gen_neutralPivec(const AC1B * analysisTree, int tauIndex);
 TLorentzVector gen_ThreeProngVec(const AC1B * analysisTree, int tauIndex);
@@ -49,11 +49,11 @@ TLorentzVector ipVec_Lepton_emu(const AC1B * analysisTree, int leptonIndex, bool
 
 double acoCP(TLorentzVector Pi1, TLorentzVector Pi2, 
 	     TLorentzVector ref1, TLorentzVector ref2,
-	     bool firstNegative, bool pi01, bool pi02, Synch17Tree *otree);
+	     bool firstNegative, bool pi01, bool pi02, SynchTree *otree);
 
 double acoCP(TLorentzVector Pi1, TLorentzVector Pi2, 
 	     TLorentzVector ref1, TLorentzVector ref2,
-	     bool firstNegative, bool pi01, bool pi02, Synch17GenTree* gentree);
+	     bool firstNegative, bool pi01, bool pi02, SynchGenTree* gentree);
 
 TLorentzVector IP_helix_lep(const AC1B * analysisTree, int lepIndex, TVector3 PV_coord, TString channel, int era, bool isEmbedded);
 double IP_significance_helix_lep(const AC1B * analysisTree, int lepIndex, TString channel, TVector3 PV_coord, const std::vector<float> &PV_cov_components,ROOT::Math::SMatrix<float,3,3, ROOT::Math::MatRepStd< float, 3, 3 >> & ipCovariance, TVector3 & ip);
@@ -131,7 +131,7 @@ TVector3 genParticleIP(const AC1B * analysisTree, TVector3 vertex, int gen_match
     
 }
 
-void calibrateIP(const AC1B * analysisTree, Synch17Tree *otree, int tauIndex1, int tauIndex2, TString channel, std::map<TString,IpCorrection*> ipCorrectors) {
+void calibrateIP(const AC1B * analysisTree, SynchTree *otree, int tauIndex1, int tauIndex2, TString channel, std::map<TString,IpCorrection*> ipCorrectors) {
 
   int nPart = analysisTree->genparticles_count;
   TVector3 vertex;
@@ -340,7 +340,7 @@ void calibrateIP(const AC1B * analysisTree, Synch17Tree *otree, int tauIndex1, i
   
 }
 
-void acott_Impr(const AC1B * analysisTree, Synch17Tree *otree, int tauIndex1, int tauIndex2, TString channel, int era, bool isEmbedded, std::map<TString,IpCorrection*> ipCorrectors){
+void acott_Impr(const AC1B * analysisTree, SynchTree *otree, int tauIndex1, int tauIndex2, TString channel, int era, bool isEmbedded, std::map<TString,IpCorrection*> ipCorrectors){
   // cout<<"Start acott_Impr"<<endl;
  
   otree->acotautau_00 = -9999;
@@ -1237,7 +1237,7 @@ TLorentzVector ipVec_Lepton_emu(const AC1B * analysisTree, int leptonIndex, bool
   return vec;
 };
 
-void gen_acott(const AC1B * analysisTree, Synch17GenTree *gentree, int tauIndex1, int tauIndex2){
+void gen_acott(const AC1B * analysisTree, SynchGenTree *gentree, int tauIndex1, int tauIndex2){
 
   bool correctDecay1 = analysisTree->gentau_decayMode[tauIndex1]<=6||analysisTree->gentau_decayMode[tauIndex1]==8||analysisTree->gentau_decayMode[tauIndex1]==9;
   bool correctDecay2 = analysisTree->gentau_decayMode[tauIndex2]<=6||analysisTree->gentau_decayMode[tauIndex2]==8||analysisTree->gentau_decayMode[tauIndex2]==9;
@@ -1792,7 +1792,7 @@ Float_t gen_A1Polarization(const AC1B * analysisTree, int tauIndex){
 //Merijn: adjust to take otree as well, conventient for debguggin..
 double acoCP(TLorentzVector Pi1, TLorentzVector Pi2, 
 	     TLorentzVector ref1, TLorentzVector ref2,
-	     bool firstNegative, bool pi01, bool pi02, Synch17Tree *otree) {
+	     bool firstNegative, bool pi01, bool pi02, SynchTree *otree) {
 
   double y1 = 1;
   double y2 = 1;
@@ -1935,7 +1935,7 @@ if(vecRho1Mag!=0&&vecRho2Mag!=0){
 
 double acoCP(TLorentzVector Pi1, TLorentzVector Pi2, 
 	     TLorentzVector ref1, TLorentzVector ref2,
-	     bool firstNegative, bool pi01, bool pi02, Synch17GenTree* otree) {
+	     bool firstNegative, bool pi01, bool pi02, SynchGenTree* otree) {
 
   double y1 = 1;
   double y2 = 1;

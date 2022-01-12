@@ -9,8 +9,8 @@
 #include "TTree.h"
 #include "TString.h"
 
-#include "DesyTauAnalyses/NTupleMaker/interface/functions.h"
-#include "DesyTauAnalyses/NTupleMaker/interface/Synch17Tree.h"
+#include "DesyTauAnalyses/Common/interface/functions.h"
+#include "DesyTauAnalyses/BBHTT/interface/SynchTree.h"
 
 class Systematics {
 public:
@@ -21,10 +21,10 @@ public:
   virtual void Eval(utils::channel ch = utils::UNKNOWN) = 0;
   virtual void Write(const char *name="", Int_t option=0) = 0;
 protected:
-  virtual void Init(Synch17Tree*) = 0;
+  virtual void Init(SynchTree*) = 0;
   
   TString label;
-  Synch17Tree* cenTree;
+  SynchTree* cenTree;
   
   void Add(void* pvar, const char* name, const char* shift, const char* type){
     cenTree->fChain->Branch(TString(name)+"_"+label+shift, pvar, TString(name)+"_"+label+shift+"/"+type);

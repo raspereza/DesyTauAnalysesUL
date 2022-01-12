@@ -14,6 +14,12 @@
 <use   name="DataFormats/PatCandidates"/>
 <use   name="DataFormats/TrackReco"/>
 <use   name="DataFormats/VertexReco"/>
+<use   name="DesyTauAnalyses/Common"/>
+<use   name="TauAnalysis/ClassicSVfit"/>
+<use   name="TauAnalysis/SVfitStandalone"/>
+<use   name="HTT-utilities/LepEffInterface"/>
+<use   name="HTT-utilities/RecoilCorrections"/>
+<use   name="HTT-utilities/RecoilCorrections_KIT"/>
 <use   name="PhysicsTools/JetMCUtils"/>
 <use   name="RecoMET/METAlgorithms"/> 
 <use   name="RecoVertex/VertexPrimitives"/>

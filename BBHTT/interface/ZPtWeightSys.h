@@ -8,8 +8,8 @@
 
 #include "TH2D.h"
 
-#include <DesyTauAnalyses/NTupleMaker/interface/functions.h>
-#include <DesyTauAnalyses/NTupleMaker/interface/Systematics.h>
+#include <DesyTauAnalyses/Common/interface/functions.h>
+#include <DesyTauAnalyses/BBHTT/interface/Systematics.h>
 
 using namespace utils;
 
@@ -18,7 +18,7 @@ public:
   
   ZPtWeightSys(){};
   
-  ZPtWeightSys(Synch17Tree* c){
+  ZPtWeightSys(SynchTree* c){
     cenTree = c;
     label = "CMS_shape_dyShape_13TeV";
     
@@ -42,7 +42,7 @@ public:
   };
   
 protected:
-  virtual void Init(Synch17Tree* c){
+  virtual void Init(SynchTree* c){
     cenTree = c;
 
     this->InitTree("Up");

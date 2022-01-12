@@ -8,7 +8,7 @@
  <use name="roottmva"/>
  <use name="boost" />
  <use name="boost_program_options"/>
- <use name="DesyTauAnalyses/NTupleMaker"/>
+ <use name="DesyTauAnalyses/BBHTT"/>
  <lib name="stdc++fs" />
 </bin>
 
@@ -21,13 +21,16 @@
  <use name="roottmva"/>
  <use name="boost" />
  <use name="boost_program_options"/>
- <use name="DesyTauAnalyses/NTupleMaker"/>
+ <use name="DesyTauAnalyses/BBHTT"/>
+ <use name="DesyTauAnalyses/Common"/>
  <use name="FWCore/ParameterSet"/>
  <use name="CondFormats/BTauObjects"/>
  <use name="CondTools/BTau"/>
  <use name="TauAnalysis/ClassicSVfit"/>
+ <use name="TauAnalysis/SVfitStandalone"/>
  <use name="ZZMatrixElement/MELA"/>
  <use name="HTT-utilities/LepEffInterface"/>
+ <use name="HTT-utilities/RecoilCorrections"/>
  <use name="HTT-utilities/RecoilCorrections_KIT"/>
  <use name="HTT-utilities/QCDModelingEMu"/>
  <use name="HiggsCPinTauDecays"/>

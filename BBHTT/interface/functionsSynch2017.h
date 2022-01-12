@@ -36,7 +36,7 @@ struct compare_lumi { //accepts two pairs, return 1 if left.first < right.first 
 int read_json(std::string filename, lumi_json& json);
 bool isGoodLumi(const std::pair<int, int>& lumi, const lumi_json& json);
 bool isGoodLumi(int run, int lumi, const lumi_json& json);
-void fill_weight(const AC1B * analysisTree, Synch17Tree *otree, PileUp *PUofficial, bool isData);
+void fill_weight(const AC1B * analysisTree, SynchTree *otree, PileUp *PUofficial, bool isData);
 float abs_Iso_mt(int Index, const AC1B * analysisTree, float dRiso);
 float abs_Iso_et(int Index, const AC1B * analysisTree, float dRiso);
 bool passedSummer16VetoId(const AC1B * analysisTree, int index);
@@ -423,7 +423,7 @@ bool extra_electron_veto(int leptonIndex, TString ch, const Config *cfg, const A
   return(0);
 }			
 
-bool extra_electron_veto_tt(const Config *cfg, const AC1B *analysisTree, Synch17Tree *otree, int era, bool isEmbedded){
+bool extra_electron_veto_tt(const Config *cfg, const AC1B *analysisTree, SynchTree *otree, int era, bool isEmbedded){
   for (unsigned int ie = 0; ie < analysisTree->electron_count; ++ie) {
     float sf_eleES = 1.0;
     if (isEmbedded) sf_eleES = EmbedElectronES_SF(analysisTree, era, ie);
@@ -488,7 +488,7 @@ bool extra_muon_veto(int leptonIndex, TString ch, const Config *cfg, const AC1B 
   return(0);
 }
 
-bool extra_muon_veto_tt(const Config *cfg, const AC1B *analysisTree, Synch17Tree *otree, bool isData){
+bool extra_muon_veto_tt(const Config *cfg, const AC1B *analysisTree, SynchTree *otree, bool isData){
   for (unsigned int im = 0; im < analysisTree->muon_count; ++im) {
     float ptVetoMuonCut = cfg->get<float>("ptVetoMuonCut");
     float etaVetoMuonCut = cfg->get<float>("etaVetoMuonCut");
@@ -524,7 +524,7 @@ bool extra_muon_veto_tt(const Config *cfg, const AC1B *analysisTree, Synch17Tree
 //////MET FUNCTIONS
 
 //fill the otree with the met variables
-void fillMET(TString ch, int leptonIndex, int tauIndex, const AC1B * analysisTree, Synch17Tree *otree){
+void fillMET(TString ch, int leptonIndex, int tauIndex, const AC1B * analysisTree, SynchTree *otree){
 
    // pfmet variables
   
@@ -543,7 +543,7 @@ void fillMET(TString ch, int leptonIndex, int tauIndex, const AC1B * analysisTre
 }
 
 //Merijn 2019 6 20: added overloaded function, takes era as argument. Will do MET correct for 2016 2017, will need later to extend to 2018
-void fillMET(const AC1B * analysisTree, Synch17Tree *otree, int era){
+void fillMET(const AC1B * analysisTree, SynchTree *otree, int era){
 
    // pfmet variables
   if(era == 2018){
@@ -578,7 +578,7 @@ void fillMET(const AC1B * analysisTree, Synch17Tree *otree, int era){
 // SV fit 
 ///////////////////////////////////
 
-void svfit_variables(TString ch, const AC1B *analysisTree, Synch17Tree *otree, const Config *cfg, TFile * inputFile_visPtResolution){
+void svfit_variables(TString ch, const AC1B *analysisTree, SynchTree *otree, const Config *cfg, TFile * inputFile_visPtResolution){
 
 
   if (cfg->get<bool>("ApplySVFit")||cfg->get<bool>("ApplyFastMTT")) {
@@ -776,7 +776,7 @@ bool passedAllMetFilters(const AC1B *analysisTree, std::vector<TString> met_filt
 
 
 //fill the otree with the weights
-void fill_weight(const AC1B * analysisTree, Synch17Tree *otree, PileUp *PUofficial, bool isData){
+void fill_weight(const AC1B * analysisTree, SynchTree *otree, PileUp *PUofficial, bool isData){
   
   otree->mcweight = 1.;
   otree->puweight = 0;
