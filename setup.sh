@@ -32,6 +32,20 @@ git clone https://github.com/svfit/ClassicSVfit TauAnalysis/ClassicSVfit -b fast
 git clone https://github.com/svfit/SVfitTF TauAnalysis/SVfitTF
 
 cd ${CMSSW_BASE}/src
+git clone https://github.com/marmeyer/RecoilCorrections.git HTT-utilities/RecoilCorrections_KIT
+
+git clone https://github.com/veelken/SVfit_standalone.git ${CMSSW_BASE}/src/TauAnalysis/SVfitStandalone
+cd ${CMSSW_BASE}/src/TauAnalysis/SVfitStandalone
+git checkout HIG-16-006
+cd ${CMSSW_BASE}/src/
+
+cp ${CMSSW_BASE}/src/DesyTauAnalyses/patch/SVFit/SVfitStandaloneAlgorithm.h TauAnalysis/SVfitStandalone/interface/
+cp ${CMSSW_BASE}/src/DesyTauAnalyses/patch/SVFit/SVfitStandaloneAlgorithm.cc TauAnalysis/SVfitStandalone/src
+cp ${CMSSW_BASE}/src/DesyTauAnalyses/patch/SVFit/testSVfitStandalone.cc TauAnalysis/SVfitStandalone/bin
+rm TauAnalysis/SVfitStandalone/interface/SVfitStandaloneQuantities.h
+rm TauAnalysis/SVfitStandalone/src/SVfitStandaloneQuantities.cc
+
+cd ${CMSSW_BASE}/src
 
 scram b -j 16
 scram b -j 16
