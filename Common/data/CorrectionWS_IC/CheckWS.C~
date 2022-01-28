@@ -1,0 +1,39 @@
+void CheckWS(TString era = "2016") {
+
+  TString name = "htt_scalefactors_legacy_"+era+".root";
+  TFile * file = new TFile(name);
+  RooWorkspace * w = (RooWorkspace*)file->Get("w");
+  w->var("m_pt")->setVal(40.);
+  w->var("m_eta")->setVal(0.2);
+  w->var("m_iso")->setVal(0.4);
+  double m_trg_23_data = w->function("m_trg_23_ic_data")->getVal();
+  double m_trg_23_mc = w->function("m_trg_23_ic_mc")->getVal();
+  double m_trg_23_emb = w->function("m_trg_23_ic_embed")->getVal();
+  double m_trg_8_data = w->function("m_trg_8_ic_data")->getVal();
+  double m_trg_8_mc = w->function("m_trg_8_ic_mc")->getVal();
+  double m_trg_8_emb = w->function("m_trg_8_ic_embed")->getVal();
+  std::cout << "m_trg_23_data = " << m_trg_23_data << std::endl;
+  std::cout << "m_trg_23_mc   = " << m_trg_23_mc << std::endl;
+  std::cout << "m_trg_23_emb  = " << m_trg_23_emb << std::endl;
+  std::cout << "m_trg_8_data = " << m_trg_8_data << std::endl;
+  std::cout << "m_trg_8_mc   = " << m_trg_8_mc << std::endl;
+  std::cout << "m_trg_8_emb  = " << m_trg_8_emb << std::endl;
+  w->var("e_pt")->setVal(40.);
+  w->var("e_eta")->setVal(0.2);
+  w->var("e_iso")->setVal(0.4);
+  double e_trg_23_data = w->function("e_trg_23_ic_data")->getVal();
+  double e_trg_23_mc = w->function("e_trg_23_ic_mc")->getVal();
+  double e_trg_23_emb = w->function("e_trg_23_ic_embed")->getVal();
+  double e_trg_12_data = w->function("e_trg_12_ic_data")->getVal();
+  double e_trg_12_mc = w->function("e_trg_12_ic_mc")->getVal();
+  double e_trg_12_emb = w->function("e_trg_12_ic_embed")->getVal();
+  std::cout << "e_trg_23_data = " << e_trg_23_data << std::endl;
+  std::cout << "e_trg_23_mc   = " << e_trg_23_mc << std::endl;
+  std::cout << "e_trg_23_emb  = " << e_trg_23_emb << std::endl;
+  std::cout << "e_trg_12_data = " << e_trg_12_data << std::endl;
+  std::cout << "e_trg_12_mc   = " << e_trg_12_mc << std::endl;
+  std::cout << "e_trg_12_emb  = " << e_trg_12_emb << std::endl;
+
+
+
+}

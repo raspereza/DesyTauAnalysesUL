@@ -534,6 +534,8 @@ void SynchTree::ReadInit(TTree *tree, TString ch)
    }
    //jets
    fChain->SetBranchAddress("njets", &njets, &b_njets);
+   fChain->SetBranchAddress("gen_nbjets_cut", &gen_nbjets_cut, &b_gen_nbjets_cut);
+   fChain->SetBranchAddress("gen_nbjets", &gen_nbjets, &b_gen_nbjets);
    fChain->SetBranchAddress("nbtag", &nbtag, &b_nbtag);
    fChain->SetBranchAddress("jpt_1", &jpt_1, &b_jpt_1);
    fChain->SetBranchAddress("jeta_1", &jeta_1, &b_jeta_1);
@@ -1252,6 +1254,8 @@ void SynchTree::WriteInit(TTree *tree, TString ch) {
   //jets
   fChain->Branch("njets", &njets, "njets/I");
   fChain->Branch("nbtag", &nbtag, "nbtag/I");
+  fChain->Branch("gen_nbjets_cut", &gen_nbjets_cut, "gen_nbjets_cut/I");
+  fChain->Branch("gen_nbjets", &gen_nbjets, "gen_nbjets/I");
   fChain->Branch("jpt_1", &jpt_1, "jpt_1/F");
   fChain->Branch("jeta_1", &jeta_1, "jeta_1/F");
   fChain->Branch("jphi_1", &jphi_1, "jphi_1/F");

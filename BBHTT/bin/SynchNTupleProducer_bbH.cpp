@@ -224,16 +224,16 @@ int main(int argc, char * argv[]){
   std::unique_ptr<JME::JetResolution> m_resolution_from_file;
   std::unique_ptr<JME::JetResolutionScaleFactor> m_scale_factor_from_file;
   if (era==2016) {
-    m_resolution_from_file.reset(new JME::JetResolution(cmsswBase+"/src/DesyTauAnalyses/NTupleMaker/data/JER/Summer16_25nsV1_MC_PtResolution_AK4PFchs.txt"));
-    m_scale_factor_from_file.reset(new JME::JetResolutionScaleFactor(cmsswBase+"/src/DesyTauAnalyses/NTupleMaker/data/JER/Summer16_25nsV1_MC_SF_AK4PFchs.txt"));
+    m_resolution_from_file.reset(new JME::JetResolution(cmsswBase+"/src/DesyTauAnalyses/Common/data/JER/Summer16_25nsV1_MC_PtResolution_AK4PFchs.txt"));
+    m_scale_factor_from_file.reset(new JME::JetResolutionScaleFactor(cmsswBase+"/src/DesyTauAnalyses/Common/data/JER/Summer16_25nsV1_MC_SF_AK4PFchs.txt"));
   }
   else if (era==2017) {
-    m_resolution_from_file.reset(new JME::JetResolution(cmsswBase+"/src/DesyTauAnalyses/NTupleMaker/data/JER/Fall17_V3_MC_PtResolution_AK4PFchs.txt"));
-    m_scale_factor_from_file.reset(new JME::JetResolutionScaleFactor(cmsswBase+"/src/DesyTauAnalyses/NTupleMaker/data/JER/Fall17_V3_MC_SF_AK4PFchs.txt"));
+    m_resolution_from_file.reset(new JME::JetResolution(cmsswBase+"/src/DesyTauAnalyses/Common/data/JER/Fall17_V3_MC_PtResolution_AK4PFchs.txt"));
+    m_scale_factor_from_file.reset(new JME::JetResolutionScaleFactor(cmsswBase+"/src/DesyTauAnalyses/Common/data/JER/Fall17_V3_MC_SF_AK4PFchs.txt"));
   }
   else {
-    m_resolution_from_file.reset(new JME::JetResolution(cmsswBase+"/src/DesyTauAnalyses/NTupleMaker/data/JER/Autumn18_V7b_MC_PtResolution_AK4PFchs.txt"));
-    m_scale_factor_from_file.reset(new JME::JetResolutionScaleFactor(cmsswBase+"/src/DesyTauAnalyses/NTupleMaker/data/JER/Autumn18_V7b_MC_SF_AK4PFchs.txt"));    
+    m_resolution_from_file.reset(new JME::JetResolution(cmsswBase+"/src/DesyTauAnalyses/Common/data/JER/Autumn18_V7b_MC_PtResolution_AK4PFchs.txt"));
+    m_scale_factor_from_file.reset(new JME::JetResolutionScaleFactor(cmsswBase+"/src/DesyTauAnalyses/Common/data/JER/Autumn18_V7b_MC_SF_AK4PFchs.txt"));    
   }
 
   JME::JetResolution resolution = *m_resolution_from_file;
@@ -512,7 +512,7 @@ int main(int argc, char * argv[]){
   if (era==2016)
     //    ggHWeightsFile = "higgs_pt_2016_v0.root";
     ggHWeightsFile = "higgs_pt_2016_v2.root";
-  TFile * f_ggHWeights = new TFile(TString(cmsswBase) + "/src/DesyTauAnalyses/NTupleMaker/data/" + ggHWeightsFile);
+  TFile * f_ggHWeights = new TFile(TString(cmsswBase) + "/src/DesyTauAnalyses/Common/data/" + ggHWeightsFile);
   if (f_ggHWeights->IsZombie()) {
     std::cout << "Cannot open file " << ggHWeightsFile << std::endl;
     exit(-1);
@@ -649,11 +649,11 @@ int main(int argc, char * argv[]){
       if (cfg.get<bool>("splitJES")){
 	JESUncertainties *jecUncertainties;
 	if (era==2016) 
-	  jecUncertainties = new JESUncertainties("DesyTauAnalyses/NTupleMaker/data/RegroupedV2_Summer16_07Aug2017_V11_MC_UncertaintySources_AK4PFchs.txt");
+	  jecUncertainties = new JESUncertainties("DesyTauAnalyses/Common/data/RegroupedV2_Summer16_07Aug2017_V11_MC_UncertaintySources_AK4PFchs.txt");
 	else if (era==2017)
-	  jecUncertainties = new JESUncertainties("DesyTauAnalyses/NTupleMaker/data/RegroupedV2_Fall17_17Nov2017_V32_MC_UncertaintySources_AK4PFchs.txt");
+	  jecUncertainties = new JESUncertainties("DesyTauAnalyses/Common/data/RegroupedV2_Fall17_17Nov2017_V32_MC_UncertaintySources_AK4PFchs.txt");
 	else 
-	  jecUncertainties = new JESUncertainties("DesyTauAnalyses/NTupleMaker/data/RegroupedV2_Autumn18_V19_MC_UncertaintySources_AK4PFchs.txt");
+	  jecUncertainties = new JESUncertainties("DesyTauAnalyses/Common/data/RegroupedV2_Autumn18_V19_MC_UncertaintySources_AK4PFchs.txt");
 	std::vector<std::string> JESnames = jecUncertainties->getUncertNames();
 	for (unsigned int i = 0; i < JESnames.size(); i++) std::cout << "i: "<< i << ", JESnames.at(i) : " << JESnames.at(i) << std::endl;
 	for (unsigned int i = 0; i < JESnames.size(); i++){
@@ -753,6 +753,21 @@ int main(int argc, char * argv[]){
 
       analysisTree.GetEntry(iEntry);
       nEvents++;
+
+
+      // counting b-jets
+      int nbjets = 0;
+      if (!isData) {
+	unsigned int njets = analysisTree.pfjet_count;
+	for (unsigned int jet = 0 ; jet<njets ; ++jet) {
+	  if (analysisTree.pfjet_flavour[jet]==5||
+	      analysisTree.pfjet_flavour[jet]==-5)
+	    nbjets++;
+	}
+      }
+      otree->gen_nbjets_cut = nbjets;
+      otree->gen_nbjets = analysisTree.genparticles_nbjets;
+
 
       // filling generator tree
       //      if (!isData){

@@ -628,6 +628,8 @@ public :
   
   //b-jets
   Int_t           nbtag;
+  Int_t           gen_nbjets_cut;
+  Int_t           gen_nbjets;
   Float_t         bpt_1;
   Float_t         beta_1;
   Float_t         bphi_1;
@@ -1342,6 +1344,8 @@ public :
   
   //b-jets
   TBranch	 *b_nbtag;
+  TBranch        *b_gen_nbjets_cut;
+  TBranch        *b_gen_nbjets;
   TBranch	 *b_bpt_1;
   TBranch	 *b_beta_1;
   TBranch	 *b_bphi_1;
