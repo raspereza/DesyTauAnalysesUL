@@ -32,6 +32,12 @@ git clone https://github.com/CMS-HTT/RecoilCorrections.git HTT-utilities/RecoilC
 cd ${CMSSW_BASE}/src
 git clone https://github.com/marmeyer/RecoilCorrections.git HTT-utilities/RecoilCorrections_KIT
 
+cd ${CMSSW_BASE}/src
+git clone https://github.com/CMS-HTT/CorrectionsWorkspace HTT-utilities/CorrectionsWorkspace
+cd ${CMSSW_BASE}/src/HTT-utilities/CorrectionsWorkspace
+root -l -q CrystalBallEfficiency.cxx++
+cd ${CMSSW_BASE}/src
+
 git clone https://github.com/veelken/SVfit_standalone.git ${CMSSW_BASE}/src/TauAnalysis/SVfitStandalone
 cd ${CMSSW_BASE}/src/TauAnalysis/SVfitStandalone
 git checkout HIG-16-006
