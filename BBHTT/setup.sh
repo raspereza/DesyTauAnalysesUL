@@ -27,6 +27,9 @@ git clone https://github.com/svfit/ClassicSVfit TauAnalysis/ClassicSVfit -b fast
 git clone https://github.com/svfit/SVfitTF TauAnalysis/SVfitTF
 
 cd ${CMSSW_BASE}/src
+git clone https://github.com/CMS-HTT/RecoilCorrections.git HTT-utilities/RecoilCorrections
+
+cd ${CMSSW_BASE}/src
 git clone https://github.com/marmeyer/RecoilCorrections.git HTT-utilities/RecoilCorrections_KIT
 
 git clone https://github.com/veelken/SVfit_standalone.git ${CMSSW_BASE}/src/TauAnalysis/SVfitStandalone
