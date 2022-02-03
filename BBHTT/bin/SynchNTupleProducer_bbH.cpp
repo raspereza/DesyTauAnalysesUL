@@ -2108,12 +2108,6 @@ void GetPFMET(AC1B * analysisTree, SynchTree * otree) {
 
 void GetPuppiMET(AC1B * analysisTree, SynchTree * otree, int era, bool isData, bool isEmbedded, bool isMcCorrectPuppi, bool smearMET) {
 
-  double shiftX = shiftX_jets + shiftX_ele;
-  double shiftY = shiftY_jets + shiftY_ele;
-
-  double metCorrPx = metUncorrPx + shiftX;
-  double metCorrPy = metUncorrPy + shiftY;
-
   double puppimet_ex = analysisTree->puppimet_ex;
   double puppimet_ey = analysisTree->puppimet_ey;
   otree->puppimet = TMath::Sqrt(puppimet_ex*puppimet_ex+
