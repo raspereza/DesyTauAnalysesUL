@@ -2114,11 +2114,11 @@ void GetPuppiMET(AC1B * analysisTree, SynchTree * otree, int era, bool isData, b
 				puppimet_ey*puppimet_ey);
   otree->puppimetphi = TMath::ATan2(puppimet_ey,puppimet_ex);
 
-  otree->puppimet_ex_UnclusteredEnUp = analysisTree->puppimet_ex_UnclusteredEnUp + shiftX;
-  otree->puppimet_ex_UnclusteredEnDown = analysisTree->puppimet_ex_UnclusteredEnDown + shiftX;
+  otree->puppimet_ex_UnclusteredEnUp = analysisTree->puppimet_ex_UnclusteredEnUp;
+  otree->puppimet_ex_UnclusteredEnDown = analysisTree->puppimet_ex_UnclusteredEnDown;
 
-  otree->puppimet_ey_UnclusteredEnUp = analysisTree->puppimet_ey_UnclusteredEnUp + shiftY;
-  otree->puppimet_ey_UnclusteredEnDown = analysisTree->puppimet_ey_UnclusteredEnDown + shiftY;
+  otree->puppimet_ey_UnclusteredEnUp = analysisTree->puppimet_ey_UnclusteredEnUp;
+  otree->puppimet_ey_UnclusteredEnDown = analysisTree->puppimet_ey_UnclusteredEnDown;
 
   otree->puppimetcov00 = analysisTree->puppimet_sigxx;
   otree->puppimetcov01 = analysisTree->puppimet_sigxy;
