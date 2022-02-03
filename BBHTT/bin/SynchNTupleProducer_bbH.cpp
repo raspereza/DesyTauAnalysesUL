@@ -2108,84 +2108,17 @@ void GetPFMET(AC1B * analysisTree, SynchTree * otree) {
 
 void GetPuppiMET(AC1B * analysisTree, SynchTree * otree, int era, bool isData, bool isEmbedded, bool isMcCorrectPuppi, bool smearMET) {
 
-  bool is2017 = false;
-
-  double metUncorr = TMath::Sqrt(analysisTree->puppimet_ex*analysisTree->puppimet_ex + analysisTree->puppimet_ey*analysisTree->puppimet_ey);
-  double puppimet_uncorr = metUncorr;
-  double puppimetphi_uncorr = TMath::ATan2(analysisTree->puppimet_ey,analysisTree->puppimet_ex);
-
-  double metUncorrPx = analysisTree->puppimet_ex;
-  double metUncorrPy = analysisTree->puppimet_ey;
-
-  double shiftX_jets = 0;
-  double shiftY_jets = 0;
-
-  //  std::cout << "Event number = " << analysisTree->event_nr << std::endl;
-
-  if (era==2017) is2017 = true;
-
-  if (!isData && !isEmbedded && smearMET) { // jet corrections for MC
-    for (unsigned int jet = 0; jet < analysisTree->pfjet_count; ++jet) {
-      float absJetEta = TMath::Abs(analysisTree->pfjet_eta[jet]);
-
-      TLorentzVector uncorrJet; uncorrJet.SetXYZT(analysisTree->pfjet_px_uncorr[jet],
-						  analysisTree->pfjet_py_uncorr[jet],
-						  analysisTree->pfjet_pz_uncorr[jet],
-						  analysisTree->pfjet_e_uncorr[jet]
-						  );
-      
-      TLorentzVector corrJet; corrJet.SetXYZT(analysisTree->pfjet_px[jet],
-					      analysisTree->pfjet_py[jet],
-					      analysisTree->pfjet_pz[jet],
-					      analysisTree->pfjet_e[jet]
-					      );
-      
-      float pT_uncorr = uncorrJet.Pt();
-      float pT_corr = corrJet.Pt();
-      
-      if (absJetEta>4.7) continue;
-      if (is2017 && pT_uncorr < 50 && absJetEta > 2.65 && absJetEta < 3.139)
-	continue;
-      
-      if (pT_corr<15.0&&pT_uncorr<15.0) continue;
-      
-      /*      
-      std::cout << "jet : pT(uncorr) = "  << pT_uncorr 
-		<< "   pT(corr) = " << pT_corr
-		<< "   unsmeared = (" << uncorrJet.Px()
-		<< "," << uncorrJet.Py()
-		<< "," << uncorrJet.Pz()
-		<< ")   smeared = (" << corrJet.Px()
-		<< "," << corrJet.Py()
-		<< "," << corrJet.Pz() << ")" << std::endl;
-      */
-      
-      shiftX_jets = shiftX_jets + uncorrJet.Px() - corrJet.Px();
-      shiftY_jets = shiftY_jets + uncorrJet.Py() - corrJet.Py();
-      
-    }
-  } 
-
-  double shiftX_ele = 0;
-  double shiftY_ele = 0;
-
-  if (isEmbedded||isMcCorrectPuppi) { 
-    double px_ele_uncorr = otree->pt_uncorr_1*TMath::Cos(otree->phi_1);
-    double py_ele_uncorr = otree->pt_uncorr_1*TMath::Sin(otree->phi_1);
-    double px_ele = otree->pt_1*TMath::Cos(otree->phi_1);
-    double py_ele = otree->pt_1*TMath::Sin(otree->phi_1);
-    shiftX_ele = shiftX_ele + px_ele_uncorr - px_ele;
-    shiftY_ele = shiftY_ele + py_ele_uncorr - py_ele;
-    
-    //    std::cout << "electron : uncorr = (" << px_ele_uncorr << "," << py_ele_uncorr << ")   "
-    //	      << "   corr = (" << px_ele << "," << py_ele << ")" << std::endl;
-  }
-
   double shiftX = shiftX_jets + shiftX_ele;
   double shiftY = shiftY_jets + shiftY_ele;
 
   double metCorrPx = metUncorrPx + shiftX;
   double metCorrPy = metUncorrPy + shiftY;
+
+  double puppimet_ex = analysisTree->puppimet_ex;
+  double puppimet_ey = analysisTree->puppimet_ey;
+  otree->puppimet = TMath::Sqrt(puppimet_ex*puppimet_ex+
+				puppimet_ey*puppimet_ey);
+  otree->puppimetphi = TMath::ATan2(puppimet_ey,puppimet_ex);
 
   otree->puppimet_ex_UnclusteredEnUp = analysisTree->puppimet_ex_UnclusteredEnUp + shiftX;
   otree->puppimet_ex_UnclusteredEnDown = analysisTree->puppimet_ex_UnclusteredEnDown + shiftX;
@@ -2193,26 +2126,6 @@ void GetPuppiMET(AC1B * analysisTree, SynchTree * otree, int era, bool isData, b
   otree->puppimet_ey_UnclusteredEnUp = analysisTree->puppimet_ey_UnclusteredEnUp + shiftY;
   otree->puppimet_ey_UnclusteredEnDown = analysisTree->puppimet_ey_UnclusteredEnDown + shiftY;
 
-  otree->puppimet = TMath::Sqrt(metCorrPx*metCorrPx+metCorrPy*metCorrPy);
-  otree->puppimetphi = TMath::ATan2(metCorrPy,metCorrPx);
-  
-  /*
-  std::cout << " shift jets (x,y) = ("
-	    << shiftX_jets << "," << shiftY_jets << ")   "
-	    << "  ele (x,y) = (" 
-	    << shiftX_ele << "," << shiftY_ele << ")   "
-	    << "  puppiMET : uncorr (x,y) = (" << metUncorrPx 
-	    << "," << metUncorrPy << ")" 
-	    << "    corr (x,y) = (" << metCorrPx 
-	    << "," << metCorrPy << ")" << std::endl; 
-  std::cout << "puppimet   (corr) = " << otree->puppimet << "  phi = " << otree->puppimetphi << std::endl;
-  std::cout << "puppimet (uncorr) = " << puppimet_uncorr << "  phi = " << puppimetphi_uncorr << std::endl;
-  printf("px : central = %6.1f  down = %6.1f  up = %6.1f\n",
-	 metCorrPx,otree->puppimet_ex_UnclusteredEnDown,otree->puppimet_ex_UnclusteredEnUp);
-  printf("py : central = %6.1f  down = %6.1f  up = %6.1f\n",
-	 metCorrPy,otree->puppimet_ey_UnclusteredEnDown,otree->puppimet_ey_UnclusteredEnUp);
-  std::cout << std::endl;
-  */
   otree->puppimetcov00 = analysisTree->puppimet_sigxx;
   otree->puppimetcov01 = analysisTree->puppimet_sigxy;
   otree->puppimetcov10 = analysisTree->puppimet_sigyx;
