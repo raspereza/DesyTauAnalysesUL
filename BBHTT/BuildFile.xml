@@ -17,7 +17,6 @@
 <use   name="DesyTauAnalyses/Common"/>
 <use   name="TauAnalysis/ClassicSVfit"/>
 <use   name="TauAnalysis/SVfitStandalone"/>
-<use   name="HTT-utilities/LepEffInterface"/>
 <use   name="HTT-utilities/RecoilCorrections"/>
 <use   name="HTT-utilities/RecoilCorrections_KIT"/>
 <use   name="PhysicsTools/JetMCUtils"/>

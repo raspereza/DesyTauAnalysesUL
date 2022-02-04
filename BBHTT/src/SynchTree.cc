@@ -329,6 +329,7 @@ void SynchTree::ReadInit(TTree *tree, TString ch)
    fChain->SetBranchAddress("embweight", &embweight, &b_embweight);
    fChain->SetBranchAddress("topptweight", &topptweight, &b_topptweight);
    fChain->SetBranchAddress("zptweight", &zptweight, &b_zptweight);
+   fChain->SetBranchAddress("zptembweight", &zptembweight, &b_zptembweight);
    fChain->SetBranchAddress("effweight", &effweight, &b_effweight); 
    fChain->SetBranchAddress("prefiringweight", &prefiringweight, &b_prefiringweight);
    fChain->SetBranchAddress("prefiringweightUp", &prefiringweightUp, &b_prefiringweightUp);
@@ -555,15 +556,19 @@ void SynchTree::ReadInit(TTree *tree, TString ch)
    fChain->SetBranchAddress("bpt_2", &bpt_2, &b_bpt_2);
    fChain->SetBranchAddress("beta_2", &beta_2, &b_beta_2);
 
+   fChain->SetBranchAddress("jcsv_1", &jcsv_1, &b_jcsv_1);
+   fChain->SetBranchAddress("jcsv_2", &jcsv_2, &b_jcsv_2);
+   fChain->SetBranchAddress("bphi_1", &bphi_1, &b_bphi_1);
+   fChain->SetBranchAddress("bcsv_1", &bcsv_1, &b_bcsv_1);
+   fChain->SetBranchAddress("bphi_2", &bphi_2, &b_bphi_2);
+   fChain->SetBranchAddress("bcsv_2", &bcsv_2, &b_bcsv_2);
+   
+   fChain->SetBranchAddress("mbb",&mbb,&b_mbb);
+   fChain->SetBranchAddress("dRbb",&dRbb,&b_dRbb);
+
    if ((ch=="mt")||(ch=="et")) {
      fChain->SetBranchAddress("njetingap", &njetingap, &b_njetingap);
      fChain->SetBranchAddress("njetingap20", &njetingap20, &b_njetingap20);
-     fChain->SetBranchAddress("jcsv_1", &jcsv_1, &b_jcsv_1);
-     fChain->SetBranchAddress("jcsv_2", &jcsv_2, &b_jcsv_2);
-     fChain->SetBranchAddress("bphi_1", &bphi_1, &b_bphi_1);
-     fChain->SetBranchAddress("bcsv_1", &bcsv_1, &b_bcsv_1);
-     fChain->SetBranchAddress("bphi_2", &bphi_2, &b_bphi_2);
-     fChain->SetBranchAddress("bcsv_2", &bcsv_2, &b_bcsv_2);
    }
    //   fChain->SetBranchAddress("njetshad", &njetshad, &b_njetshad);
    //   fChain->SetBranchAddress("njetspt20", &njetspt20, &b_njetspt20);
@@ -1147,6 +1152,7 @@ void SynchTree::WriteInit(TTree *tree, TString ch) {
   fChain->Branch("prefiringweightDown", &prefiringweightDown, "prefiringweightDown/F");
   fChain->Branch("topptweight", &topptweight, "topptweight/F");
   fChain->Branch("zptweight", &zptweight, "zptweight/D");
+  fChain->Branch("zptembweight", &zptembweight, "zptembweight/D");
   fChain->Branch("effweight", &effweight, "effweight/F"); 
 
   if (ch == "em") {
@@ -1274,17 +1280,19 @@ void SynchTree::WriteInit(TTree *tree, TString ch) {
   fChain->Branch("beta_1", &beta_1, "beta_1/F");
   fChain->Branch("bpt_2", &bpt_2, "bpt_2/F");
   fChain->Branch("beta_2", &beta_2, "beta_2/F");
+  fChain->Branch("jcsv_1", &jcsv_1, "jcsv_1/F");
+  fChain->Branch("jcsv_2", &jcsv_2, "jcsv_2/F");
+  fChain->Branch("bphi_1", &bphi_1, "bphi_1/F");
+  fChain->Branch("bcsv_1", &bcsv_1, "bcsv_1/F");
+  fChain->Branch("bphi_2", &bphi_2, "bphi_2/F");
+  fChain->Branch("bcsv_2", &bcsv_2, "bcsv_2/F");
+  fChain->Branch("mbb",&mbb,"mbb/F");
+  fChain->Branch("dRbb",&dRbb,"dRbb/F");
   
   if ((ch == "mt")||(ch == "et")) {
     fChain->Branch("njetingap", &njetingap, "njetingap/I");
     fChain->Branch("njetingap20", &njetingap20, "njetingap20/I");
     
-    fChain->Branch("jcsv_1", &jcsv_1, "jcsv_1/F");
-    fChain->Branch("jcsv_2", &jcsv_2, "jcsv_2/F");
-    fChain->Branch("bphi_1", &bphi_1, "bphi_1/F");
-    fChain->Branch("bcsv_1", &bcsv_1, "bcsv_1/F");
-    fChain->Branch("bphi_2", &bphi_2, "bphi_2/F");
-    fChain->Branch("bcsv_2", &bcsv_2, "bcsv_2/F");
   }
   
   //Misc   

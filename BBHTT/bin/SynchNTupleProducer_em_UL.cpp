@@ -22,7 +22,6 @@ void FillElMu(const AC1B *analysisTree, SynchTree *otree, int electronIndex, flo
 void CheckEMu(const AC1B * analysisTree, SynchTree * tree);
 
 void getHiggsPtWeight(const AC1B * analysisTree, SynchTree * tree, RooWorkspace * ws, double mass);
-void CorrectPuppiMET(const AC1B * analysisTree, SynchTree * otree, double scale);
 
 bool accessTriggerInfo(const AC1B * analysisTree, TString HLTFilterName, unsigned int &nHLTFilter)
 {
@@ -126,7 +125,7 @@ bool triggerMatching(AC1B * analysisTree, Float_t eta, Float_t phi, bool isFilte
    return trigMatch;
 }
 
-void GetPuppiMET(AC1B * analysisTree, SynchTree * otree, int era, bool isEmbedded, bool isData, bool isMcCorrectPuppi, bool smearMET); 
+void GetPuppiMET(AC1B * analysisTree, SynchTree * otree); 
 
 void GetPFMET(AC1B * analysisTree, SynchTree * otree);
 
@@ -191,8 +190,6 @@ int main(int argc, char * argv[]){
   const bool ApplyMetFilters  = cfg.get<bool>("ApplyMetFilters");
   const bool usePuppiMET      = cfg.get<bool>("UsePuppiMET");
   const bool ApplyBTagCP5Correction = cfg.get<bool>("ApplyBTagCP5Correction");
-  const bool ApplyMetCorrection = cfg.get<bool>("ApplyMetCorrection");
-  const bool smearMET = cfg.get<bool>("SmearMET");
 
   // JER
   //  const string jer_resolution = cfg.get<string>("JER_Resolution");
@@ -214,6 +211,7 @@ int main(int argc, char * argv[]){
 
   //zptweight file 
   const string ZptweightFile = cfg.get<string>("ZptweightFile");
+  const string ZptEmbweightFile = cfg.get<string>("ZptEmbweightFile");
 
   //b-tag scale factors
   const string BTagAlgorithm = cfg.get<string>("BTagAlgorithm");
@@ -531,7 +529,7 @@ int main(int argc, char * argv[]){
   TH2D *h_zptweight = (TH2D*)f_zptweight->Get("zptmass_histo");
 
   // Zpt reweighting for embedded
-  TFile * f_zptweight_emb = new TFile(TString(cmsswBase) + "/src/DesyTauAnalyses/Common/data/embed_zmm_shifts_v2.root");
+  TFile * f_zptweight_emb = new TFile(TString(cmsswBase) + "/" + ZptEmbweightFile, "read");
 
   TString Era("2016");
   if (era==2017) Era = "2017";
@@ -1326,19 +1324,17 @@ int main(int argc, char * argv[]){
       	float bosonMass = genV.M();
       	float bosonPt = genV.Pt();
 
-        //Merijn determine here some min and max values:
         double massxmin = h_zptweight->GetXaxis()->GetXmin();
         double massxmax = h_zptweight->GetXaxis()->GetXmax();
 
         double ptxmin = h_zptweight->GetYaxis()->GetXmin();
         double ptxmax = h_zptweight->GetYaxis()->GetXmax();
 
-      	//Merijn 2019 6 13: adjust to T/M functions, to get boundaries right. Otherwise, for 2017 data we get few outliers that screw up the weight histogram dramatically.
       	Float_t zptmassweight = 1;
       	if (bosonMass > 50.0) {
           float bosonMassX = bosonMass;
           float bosonPtX = bosonPt;
-          if (bosonMassX > massxmax) bosonMassX = massxmax - h_zptweight->GetXaxis()->GetBinWidth(h_zptweight->GetYaxis()->GetNbins())*0.5;//Merijn: if doesn't work, lower by 1/2 binwidth..
+          if (bosonMassX > massxmax) bosonMassX = massxmax - h_zptweight->GetXaxis()->GetBinWidth(h_zptweight->GetYaxis()->GetNbins())*0.5;
           if (bosonPtX < ptxmin)     bosonPtX = ptxmin + h_zptweight->GetYaxis()->GetBinWidth(1)*0.5;
           if (bosonPtX > ptxmax)     bosonPtX = ptxmax - h_zptweight->GetYaxis()->GetBinWidth(h_zptweight->GetYaxis()->GetNbins())*0.5;
           zptmassweight = h_zptweight->GetBinContent(h_zptweight->GetXaxis()->FindBin(bosonMassX), h_zptweight->GetYaxis()->FindBin(bosonPtX));
@@ -1386,40 +1382,8 @@ int main(int argc, char * argv[]){
 
       // !!!!!!!!!!! include electron and jet !!!!!!!!!!!!!
       // !!!!!!!!!!! smearing corrections !!!!!!!!!!!!!!!!!
-      GetPuppiMET(&analysisTree, otree, era, isData, isEmbedded, isMcCorrectPuppi, smearMET);
+      GetPuppiMET(&analysisTree, otree);
       GetPFMET(&analysisTree, otree);
-
-      //      if (isEmbedded && ApplyMetCorrection)
-      //	CorrectPuppiMET(&analysisTree,otree,genMetScale);
-
-      /*     
-      float puppimetUp = sqrt(analysisTree.puppimet_ex_UnclusteredEnUp*analysisTree.puppimet_ex_UnclusteredEnUp+
-			      analysisTree.puppimet_ey_UnclusteredEnUp*analysisTree.puppimet_ey_UnclusteredEnUp);
-      float puppimetphiUp = atan2(analysisTree.puppimet_ey_UnclusteredEnUp,
-				  analysisTree.puppimet_ex_UnclusteredEnUp); 
-
-      float puppimetDown = sqrt(analysisTree.puppimet_ex_UnclusteredEnDown*analysisTree.puppimet_ex_UnclusteredEnDown+
-			      analysisTree.puppimet_ey_UnclusteredEnDown*analysisTree.puppimet_ey_UnclusteredEnDown);
-      float puppimetphiDown = atan2(analysisTree.puppimet_ey_UnclusteredEnDown,
-				  analysisTree.puppimet_ex_UnclusteredEnDown); 
-
-      std::cout << std::endl;
-      std::cout << " Central : (" << analysisTree.puppimet_ex 
-		<< "," << analysisTree.puppimet_ey << ")" << std::endl;
-
-      std::cout << "Up : (" << otree->puppimet_ex_UnclusteredEnUp 
-		<< "," << otree->puppimet_ey_UnclusteredEnUp << ")" << std::endl;
-
-      std::cout << "Down : (" << otree->puppimet_ex_UnclusteredEnDown 
-		<< "," << otree->puppimet_ey_UnclusteredEnDown << ")" << std::endl;
-
-      std::cout << "PuppiMET central :  " << otree->puppimet 
-      		<< "    " << analysisTree.puppimet_phi << std::endl;
-      std::cout << "PuppiMET up      :  " << puppimetUp 
-      		<< "    " << puppimetphiUp << std::endl;
-      std::cout << "PuppiMET down    :  " << puppimetDown
-      		<< "    " << puppimetphiDown << std::endl;
-      */
 
       otree->met_uncorr = otree->puppimet;
       otree->metphi_uncorr = otree->puppimetphi;
@@ -2027,7 +1991,7 @@ void GetPFMET(AC1B * analysisTree, SynchTree * otree) {
 
 }
 
-void GetPuppiMET(AC1B * analysisTree, SynchTree * otree, int era, bool isData, bool isEmbedded, bool isMcCorrectPuppi, bool smearMET) {
+void GetPuppiMET(AC1B * analysisTree, SynchTree * otree) {
 
   /*
   bool is2017 = false;
@@ -2096,55 +2060,6 @@ void GetPuppiMET(AC1B * analysisTree, SynchTree * otree, int era, bool isData, b
   otree->puppimetcov01 = analysisTree->puppimet_sigxy;
   otree->puppimetcov10 = analysisTree->puppimet_sigyx;
   otree->puppimetcov11 = analysisTree->puppimet_sigyy;
-
-}
-
-void CorrectPuppiMET(const AC1B * analysisTree, SynchTree * otree, double scale) {
-
-  TLorentzVector neutrinos4; neutrinos4.SetXYZT(0.,0.,0.,0.);
-  for (unsigned int i=0; i<analysisTree->genparticles_count; ++i) {
-    int pdgId = TMath::Abs(analysisTree->genparticles_pdgid[i]);
-    bool isLastCopy = analysisTree->genparticles_isLastCopy[i]>0;
-    bool isNeutrino = pdgId==12 || pdgId==14 || pdgId==16;
-    bool isDirectPromptTauDecayProduct = analysisTree->genparticles_isDirectPromptTauDecayProduct[i]>0;
-    if (isNeutrino&&isLastCopy&&isDirectPromptTauDecayProduct) {
-      TLorentzVector neutrino4;
-      neutrino4.SetXYZT(analysisTree->genparticles_px[i],
-			analysisTree->genparticles_py[i],
-			analysisTree->genparticles_pz[i],
-			analysisTree->genparticles_e[i]);
-      neutrinos4 += neutrino4;
-    }
-    
-  }
-
-  //  std::cout << "Corrected Puppi Met (embedding) --> " << std::endl;
-  //  std::cout << "Neutrinos (px,py)=(" << neutrinos4.Px() << "," << neutrinos4.Py() << ")" << std::endl;
-
-  double metx = otree->puppimet*TMath::Cos(otree->puppimetphi);
-  double mety = otree->puppimet*TMath::Sin(otree->puppimetphi);
-  TLorentzVector met4; met4.SetXYZM(metx,mety,0.,0.);
-  TLorentzVector fakeMet4 = met4 - neutrinos4;
-  TLorentzVector corrFakeMet4_Down = 0.95 * fakeMet4;
-  TLorentzVector corrFakeMet4_Up = 1.05 * fakeMet4;
-  //  TLorentzVector twiceCorrFakeMet4 = scale * corrFakeMet4;
-  TLorentzVector corrMet4_Up   = neutrinos4 + corrFakeMet4_Up;
-  TLorentzVector corrMet4_Down = neutrinos4 + corrFakeMet4_Down;
-
-  otree->puppimet = met4.Pt();
-  otree->puppimetphi = met4.Phi();
-
-  otree->puppimet_ex_UnclusteredEnDown = corrMet4_Down.Px();
-  otree->puppimet_ey_UnclusteredEnDown = corrMet4_Down.Py();
-
-  otree->puppimet_ex_UnclusteredEnUp = corrMet4_Up.Px();
-  otree->puppimet_ey_UnclusteredEnUp = corrMet4_Up.Py();
-
-  /*
-  printf("px : central = %6.1f ; down  = %6.1f ; up = %6.1f\n",corrMet4.Px(),otree->puppimet_ex_UnclusteredEnDown,otree->puppimet_ex_UnclusteredEnUp);
-  printf("py : central = %6.1f ; down  = %6.1f ; up = %6.1f\n",corrMet4.Py(),otree->puppimet_ey_UnclusteredEnDown,otree->puppimet_ey_UnclusteredEnUp);
-  std::cout << std::endl;
-  */
 
 }
 

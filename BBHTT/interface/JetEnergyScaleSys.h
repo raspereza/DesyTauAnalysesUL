@@ -7,7 +7,6 @@
 #define addvar(name, value, key, type) name[key] = value; this->Add( &this->name[key], #name, key, #type)
 #include "DesyTauAnalyses/Common/interface/Config.h"
 #include "DesyTauAnalyses/Common/interface/AC1B.h"
-#include <DesyTauAnalyses/Common/interface/functions.h>
 #include <DesyTauAnalyses/BBHTT/interface/leptau_jets.h>
 #include <DesyTauAnalyses/BBHTT/interface/Systematics.h>
 

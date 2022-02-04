@@ -1,3 +1,6 @@
+#ifndef Defs_Alexeis_h
+#define Defs_Alexeis_h
+
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -60,10 +63,12 @@
 #include "DesyTauAnalyses/BBHTT/interface/PuppiMETSys.h"
 #include "DesyTauAnalyses/BBHTT/interface/PFMETSys.h"
 #include "DesyTauAnalyses/BBHTT/interface/BtagSys.h"
-
+#include "DesyTauAnalyses/BBHTT/interface/ScaleFactors.h"
 
 #include "HiggsCPinTauDecays/ImpactParameter/interface/ImpactParameter.h"
 #include "HTT-utilities/RecoilCorrections_KIT/interface/MEtSys.h"
 //#include "HTTutilities/Jet2TauFakes/interface/FakeFactor.h"
 #include "JetMETCorrections/Modules/interface/JetResolution.h"
 #include "RooFunctor.h"
+
+#endif

@@ -12,7 +12,6 @@
  <lib name="stdc++fs" />
 </bin>
 
-
 <bin name="SynchNTupleProducer_bbH" file="SynchNTupleProducer_bbH.cpp">
  <use name="PhysicsTools/Utilities"/>
  <use name="rootgraphics"/>
@@ -28,17 +27,14 @@
  <use name="CondTools/BTau"/>
  <use name="TauAnalysis/ClassicSVfit"/>
  <use name="TauAnalysis/SVfitStandalone"/>
- <use name="ZZMatrixElement/MELA"/>
- <use name="HTT-utilities/LepEffInterface"/>
  <use name="HTT-utilities/RecoilCorrections"/>
  <use name="HTT-utilities/RecoilCorrections_KIT"/>
- <use name="HTT-utilities/QCDModelingEMu"/>
- <use name="HiggsCPinTauDecays"/>
  <use name="HiggsCPinTauDecays/ImpactParameter"/>
  <use name="HiggsCPinTauDecays/IpCorrection"/>
 </bin>
 
-<bin name="SynchNTupleProducer_em" file="SynchNTupleProducer_em_Run2.cpp">
+
+<bin name="SynchNTupleProducer_em" file="SynchNTupleProducer_em_UL.cpp">
  <use name="PhysicsTools/Utilities"/>
  <use name="rootgraphics"/>
  <use name="root"/>
@@ -53,12 +49,8 @@
  <use name="CondTools/BTau"/>
  <use name="TauAnalysis/ClassicSVfit"/>
  <use name="TauAnalysis/SVfitStandalone"/>
- <use name="ZZMatrixElement/MELA"/>
- <use name="HTT-utilities/LepEffInterface"/>
  <use name="HTT-utilities/RecoilCorrections"/>
  <use name="HTT-utilities/RecoilCorrections_KIT"/>
- <use name="HTT-utilities/QCDModelingEMu"/>
- <use name="HiggsCPinTauDecays"/>
  <use name="HiggsCPinTauDecays/ImpactParameter"/>
  <use name="HiggsCPinTauDecays/IpCorrection"/>
 </bin>

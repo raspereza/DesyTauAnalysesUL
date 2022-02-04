@@ -503,6 +503,7 @@ public :
 
   Float_t         topptweight;
   Double_t 	  zptweight;
+  Double_t        zptembweight;
   Double_t        trkeffweight;
   Float_t         etaufakeweight;
   Float_t         mutaufakeweight;
@@ -639,6 +640,9 @@ public :
   Float_t         bphi_2;
   Float_t         bcsv_2;
   
+  Float_t         mbb;
+  Float_t         dRbb;
+
   //Trigger 
 
   Int_t           gen_noutgoing;
@@ -1242,6 +1246,7 @@ public :
 
   TBranch	 *b_topptweight;
   TBranch	 *b_zptweight;
+  TBranch	 *b_zptembweight;
   TBranch	 *b_trkeffweight;
   TBranch	 *b_etaufakeweight;
   TBranch	 *b_mutaufakeweight;
@@ -1355,6 +1360,9 @@ public :
   TBranch	 *b_bphi_2;
   TBranch	 *b_bcsv_2;
   
+  TBranch        *b_mbb;
+  TBranch        *b_dRbb;
+
   //Misc  
 
   TBranch	 *b_gen_noutgoing;
