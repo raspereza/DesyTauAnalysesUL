@@ -1,19 +1,32 @@
 #!/bin/bash
 
-CHANNEL=em
+CHANNEL=$1
 echo "CONFIGFILE,FILELIST" > parameters.txt
 
-# data
-./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_data.conf MuonEG_Run2018A 20
-./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_data.conf MuonEG_Run2018B 20
-./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_data.conf MuonEG_Run2018C 20
-./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_data.conf MuonEG_Run2018D 20
+if [[ $CHANNEL == "em" ]]; then
+    # data
+    ./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_data.conf MuonEG_Run2018A 20
+    ./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_data.conf MuonEG_Run2018B 20
+    ./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_data.conf MuonEG_Run2018C 20
+    ./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_data.conf MuonEG_Run2018D 20
 
-# Embedded
-./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_embedded.conf EmbeddedElMu_Run2018A 4
-./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_embedded.conf EmbeddedElMu_Run2018B 4
-./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_embedded.conf EmbeddedElMu_Run2018C 4
-./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_embedded.conf EmbeddedElMu_Run2018D 4
+    # Embedded
+    ./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_embedded.conf EmbeddedElMu_Run2018A 4
+    ./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_embedded.conf EmbeddedElMu_Run2018B 4
+    ./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_embedded.conf EmbeddedElMu_Run2018C 4
+    ./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_embedded.conf EmbeddedElMu_Run2018D 4
+elif [[ $CHANNEL == "tt" ]]; then
+    ./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_data.conf Tau_Run2018A 20
+    ./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_data.conf Tau_Run2018B 20
+    ./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_data.conf Tau_Run2018C 20
+    ./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_data.conf Tau_Run2018D 20
+
+    # Embedded
+    ./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_embedded.conf EmbeddedTauTau_Run2018A 4
+    ./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_embedded.conf EmbeddedTauTau_Run2018B 4
+    ./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_embedded.conf EmbeddedTauTau_Run2018C 4
+    ./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_embedded.conf EmbeddedTauTau_Run2018D 4
+fi
     
 # DY
 ./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_MC.conf DYJetsToLL_M-50 20
@@ -73,3 +86,7 @@ echo "CONFIGFILE,FILELIST" > parameters.txt
 ./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_MC.conf BBHToTauTauYbYt_M125_13TeV 5
 
 
+# BBHToWW
+
+./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_MC.conf BBHToWW_M125_13TeV 5
+./split_filelist.sh analysisMacroSynch_${CHANNEL}_18_MC.conf BBHToWWYbYt_M125_13TeV 5

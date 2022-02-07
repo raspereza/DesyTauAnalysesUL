@@ -1,24 +1,35 @@
 #!/bin/bash
 
 YEAR=20${1}
-CHANNEL=em
-
-if [ ! -d "$YEAR" ]; then
-  mkdir ${YEAR}
-  cp run_synchntyples.sh ./${YEAR}
-  cp split_filelist.sh ./${YEAR}
-  cp gc_synch.conf ./${YEAR} 
-  cp make_parameter_file_${YEAR}.sh ./${YEAR}
+CHANNEL=$2
+if [[ $CHANNEL == "em" ]]; then
+    OUTDIR=./emu/20$YEAR
+else  
+    if [[ $CHANNEL == "tt" ]]; then
+	OUTDIR=./tautau/20$YEAR
+    else
+	echo "ERROR: please run the script with ./gridcontrol_setup_mt_Run2.sh <year={16,17,18}> <channel={tt,em}>"
+	exit
+    fi
 fi
 
-./make_config_Run2.sh $1 MC 
-./make_config_Run2.sh $1 data 
-./make_config_Run2.sh $1 embedded 
-./make_lists_${YEAR}.sh
+if [ ! -d "$OUTDIR" ]; then
+  mkdir ${OUTDIR}
+  cp ./run_${CHANNEL}_synchntyples.sh $OUTDIR/run_synchntyples.sh
+  cp ./split_filelist.sh $OUTDIR/.
+  cp ./gc_synch.conf $OUTDIR/. 
+  cp ./make_parameter_file_$YEAR.sh $OUTDIR/.
+  cp ./add_samples.sh $OUTDIR/.
+fi
 
-cd ./${YEAR}
+./make_config_Run2.sh $1 $CHANNEL MC 
+./make_config_Run2.sh $1 $CHANNEL data 
+./make_config_Run2.sh $1 $CHANNEL embedded 
+./make_lists_${YEAR}.sh $CHANNEL
+
+cd ./$OUTDIR
 rm parameters.txt
-./make_parameter_file_${YEAR}.sh
+./make_parameter_file_${YEAR}.sh $CHANNEL
 cd -
 
 echo "-----------------------------------------"

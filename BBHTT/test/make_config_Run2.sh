@@ -3,8 +3,8 @@
 ### the script is to be run with "./make_config_Run2.sh <year={16,17,18}> <data_type={data, MC, embedded}>"
 
 YEAR=$1
-DATA_TYPE=$2
-CHANNEL=em
+CHANNEL=$2
+DATA_TYPE=$3
 if [ $YEAR -lt 16 ] || [ $YEAR -gt 18 ]; then
     echo
     echo "To produce the scripts for a specific year and either data or MC this script is to be run with a command:"
@@ -52,7 +52,7 @@ fi
 
 TEMPLATE_CFG_PREFIX="analysisMacroSynch"
 TEMPLATE_CFG_NAME=${TEMPLATE_CFG_PREFIX}_${CHANNEL}_${YEAR}_${DATA_TYPE}
-cp ${TEMPLATE_CFG_PREFIX}_template.conf ${TEMPLATE_CFG_NAME}_tmp.conf
+cp ${TEMPLATE_CFG_PREFIX}_${CHANNEL}_template.conf ${TEMPLATE_CFG_NAME}_tmp.conf
 
 # remove all the lines for years which is not the one specified 
 NOT_YEAR_LEN=${#NOT_YEAR[@]}

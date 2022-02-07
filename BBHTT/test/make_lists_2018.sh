@@ -5,7 +5,24 @@ dirMC=/pnfs/desy.de/cms/tier2/store/user/rasp/ntuples_Dec2020/2018/mc
 dirMC2=/pnfs/desy.de/cms/tier2/store/user/rasp/ntuples_Dec2020/2018/mc_2
 dirMC_UL=/pnfs/desy.de/cms/tier2/store/user/acardini/ntuples/Oktoberfest21/2018/mc
 
-OUTDIR=./2018
+CHANNEL=$1
+
+
+if [[ $CHANNEL == "em" ]]; then
+    OUTDIR=./emu/2018
+else   
+    if [[ $CHANNEL == "tt" ]]; then
+	OUTDIR=./tautau/2018
+	dirMC_UL=/pnfs/desy.de/cms/tier2/store/user/rasp/ntuples/UL/2018/mc
+	dirData=/pnfs/desy.de/cms/tier2/store/user/rasp/ntuples/UL/2018/data
+	dirEmbedded=/pnfs/desy.de/cms/tier2/store/user/rasp/ntuples_Dec2020/2018/emb
+    else
+	echo "ERROR: please run the script with ./make_lists_2018.sh <channel={tt,em}>"
+	exit
+    fi
+fi 
+
+
 if [ ! -d "$OUTDIR" ]; then
   echo "Path does not exist: ${OUTDIR}"
   echo "Please create it"
@@ -59,16 +76,6 @@ ls $dirMC/HWminusJ_HToWW_M125_13TeV_powheg_jhugen724_pythia8_TuneCP5/*root > $OU
 ls $dirMC/HWplusJ_HToWW_M125_13TeV_powheg_jhugen724_pythia8_TuneCP5/*root > $OUTDIR/HWplusJ_HToWW_M125
 ls $dirMC/HZJ_HToWW_M125_13TeV_powheg_jhugen714_pythia8_TuneCP5/*root > $OUTDIR/ZHJ_HToWW_M125
 
-ls $dirData/MuonEG-Run2018A-UL2018/*.root > $OUTDIR/MuonEG_Run2018A
-ls $dirData/MuonEG-Run2018B-UL2018/*.root > $OUTDIR/MuonEG_Run2018B
-ls $dirData/MuonEG-Run2018C-UL2018/*.root > $OUTDIR/MuonEG_Run2018C
-ls $dirData/MuonEG-Run2018D-UL2018/*.root > $OUTDIR/MuonEG_Run2018D
-
-ls $dirEmbedded/EmbeddingRun2018A_ElMu/*root > $OUTDIR/EmbeddedElMu_Run2018A
-ls $dirEmbedded/EmbeddingRun2018B_ElMu/*root > $OUTDIR/EmbeddedElMu_Run2018B
-ls $dirEmbedded/EmbeddingRun2018C_ElMu/*root > $OUTDIR/EmbeddedElMu_Run2018C
-ls $dirEmbedded/EmbeddingRun2018D_ElMu/*root > $OUTDIR/EmbeddedElMu_Run2018D
-
 ls $dirMC_UL/BBHToTauTauYbYt/*.root > $OUTDIR/BBHToTauTauYbYt_M125_13TeV
 
 ls $dirMC_UL/GluGluToBBHToTauTau/*.root > $OUTDIR/GluGluToBBHToTauTau_M125_13TeV
@@ -78,3 +85,32 @@ ls $dirMC_UL/GluGluToBBHToTauTau-ext2/*.root >> $OUTDIR/GluGluToBBHToTauTau_M125
 ls $dirMC_UL/BBHToTauTau/*.root > $OUTDIR/BBHToTauTau_M125_13TeV
 ls $dirMC_UL/BBHToTauTau-ext1/*.root >> $OUTDIR/BBHToTauTau_M125_13TeV
 ls $dirMC_UL/BBHToTauTau-ext2/*.root >> $OUTDIR/BBHToTauTau_M125_13TeV
+
+ls $dirMC2/bbHToWWTo2L2Nu_M-125_yb2/*.root > $OUTDIR/BBHToWW_M125_13TeV
+
+ls $dirMC2/bbHToWWTo2L2Nu_M-125_ybyt/*.root > $OUTDIR/BBHToWWYbYt_M125_13TeV
+
+
+
+
+if [[ $CHANNEL == "em" ]]; then
+    ls $dirData/MuonEG-Run2018A-UL2018/*.root > $OUTDIR/MuonEG_Run2018A
+    ls $dirData/MuonEG-Run2018B-UL2018/*.root > $OUTDIR/MuonEG_Run2018B
+    ls $dirData/MuonEG-Run2018C-UL2018/*.root > $OUTDIR/MuonEG_Run2018C
+    ls $dirData/MuonEG-Run2018D-UL2018/*.root > $OUTDIR/MuonEG_Run2018D
+    
+    ls $dirEmbedded/EmbeddingRun2018A_ElMu/*root > $OUTDIR/EmbeddedElMu_Run2018A
+    ls $dirEmbedded/EmbeddingRun2018B_ElMu/*root > $OUTDIR/EmbeddedElMu_Run2018B
+    ls $dirEmbedded/EmbeddingRun2018C_ElMu/*root > $OUTDIR/EmbeddedElMu_Run2018C
+    ls $dirEmbedded/EmbeddingRun2018D_ElMu/*root > $OUTDIR/EmbeddedElMu_Run2018D
+elif [[ $CHANNEL == "tt" ]]; then
+    ls $dirData_AB/Tau-Run2018A-UL2018/*.root > $OUTDIR/Tau_Run2018A
+    ls $dirData_AB/Tau-Run2018B-UL2018/*.root > $OUTDIR/Tau_Run2018B
+    ls $dirData_CD/Tau_Run2018C/*.root > $OUTDIR/Tau_Run2018C
+    ls $dirData_CD/Tau_Run2018D/*.root > $OUTDIR/Tau_Run2018D
+
+    ls $dirEmbedded/EmbeddingRun2018A_TauTau/*root > $OUTDIR/EmbeddedTauTau_Run2018A
+    ls $dirEmbedded/EmbeddingRun2018B_TauTau/*root > $OUTDIR/EmbeddedTauTau_Run2018B
+    ls $dirEmbedded/EmbeddingRun2018C_TauTau/*root > $OUTDIR/EmbeddedTauTau_Run2018C
+    ls $dirEmbedded/EmbeddingRun2018D_TauTau/*root > $OUTDIR/EmbeddedTauTau_Run2018D
+fi
