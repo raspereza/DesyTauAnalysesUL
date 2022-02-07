@@ -30,6 +30,7 @@
 
 #include "TVector3.h"
 #include "TMatrix.h"
+#include "TGraphAsymmErrors.h"
 
 #include "RooRealVar.h"
 #include "RooWorkspace.h"

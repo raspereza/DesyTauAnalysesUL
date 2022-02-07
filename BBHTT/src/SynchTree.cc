@@ -321,6 +321,37 @@ void SynchTree::ReadInit(TTree *tree, TString ch)
      fChain->SetBranchAddress("MVADM2017v1DM2raw_2", &MVADM2017v1DM2raw_2, &b_MVADM2017v1DM2raw_2);
      fChain->SetBranchAddress("MVADM2017v1DMotherraw_2", &MVADM2017v1DMotherraw_2, &b_MVADM2017v1DMotherraw_2);
    }
+   if (ch == "tt") {
+
+     fChain->SetBranchAddress("weight_CMS_eff_tauidUp",&weight_CMS_eff_tauidUp,&b_weight_CMS_eff_tauidUp);
+     fChain->SetBranchAddress("weight_CMS_eff_tauidDown",&weight_CMS_eff_tauidDown,&b_weight_CMS_eff_tauidDown);
+     fChain->SetBranchAddress("weight_CMS_eff_tauid_DM0Up",&weight_CMS_eff_tauid_DM0Up,&b_weight_CMS_eff_tauid_DM0Up);
+     fChain->SetBranchAddress("weight_CMS_eff_tauid_DM0Down",&weight_CMS_eff_tauid_DM0Down,&b_weight_CMS_eff_tauid_DM0Down);
+     fChain->SetBranchAddress("weight_CMS_eff_tauid_DM1Up",&weight_CMS_eff_tauid_DM1Up,&b_weight_CMS_eff_tauid_DM1Up);
+     fChain->SetBranchAddress("weight_CMS_eff_tauid_DM1Down",&weight_CMS_eff_tauid_DM1Down,&b_weight_CMS_eff_tauid_DM1Down);
+     fChain->SetBranchAddress("weight_CMS_eff_tauid_DM10Up",&weight_CMS_eff_tauid_DM10Up,&b_weight_CMS_eff_tauid_DM10Up);
+     fChain->SetBranchAddress("weight_CMS_eff_tauid_DM10Down",&weight_CMS_eff_tauid_DM10Down,&b_weight_CMS_eff_tauid_DM10Down);
+     fChain->SetBranchAddress("weight_CMS_eff_tauid_DM11Up",&weight_CMS_eff_tauid_DM11Up,&b_weight_CMS_eff_tauid_DM11Up);
+     fChain->SetBranchAddress("weight_CMS_eff_tauid_DM11Down",&weight_CMS_eff_tauid_DM11Down,&b_weight_CMS_eff_tauid_DM11Down);
+
+     fChain->SetBranchAddress("weight_CMS_eff_tau_trigUp",&weight_CMS_eff_tau_trigUp,&b_weight_CMS_eff_tau_trigUp);
+     fChain->SetBranchAddress("weight_CMS_eff_tau_trigDown",&weight_CMS_eff_tau_trigDown,&b_weight_CMS_eff_tau_trigDown);
+     fChain->SetBranchAddress("weight_CMS_eff_tau_trig_DM0Up",&weight_CMS_eff_tau_trig_DM0Up,&b_weight_CMS_eff_tau_trig_DM0Up);
+     fChain->SetBranchAddress("weight_CMS_eff_tau_trig_DM0Down",&weight_CMS_eff_tau_trig_DM0Down,&b_weight_CMS_eff_tau_trig_DM0Down);
+     fChain->SetBranchAddress("weight_CMS_eff_tau_trig_DM1Up",&weight_CMS_eff_tau_trig_DM1Up,&b_weight_CMS_eff_tau_trig_DM1Up);
+     fChain->SetBranchAddress("weight_CMS_eff_tau_trig_DM1Down",&weight_CMS_eff_tau_trig_DM1Down,&b_weight_CMS_eff_tau_trig_DM1Down);
+     fChain->SetBranchAddress("weight_CMS_eff_tau_trig_DM10Up",&weight_CMS_eff_tau_trig_DM10Up,&b_weight_CMS_eff_tau_trig_DM10Up);
+     fChain->SetBranchAddress("weight_CMS_eff_tau_trig_DM10Down",&weight_CMS_eff_tau_trig_DM10Down,&b_weight_CMS_eff_tau_trig_DM10Down);
+     fChain->SetBranchAddress("weight_CMS_eff_tau_trig_DM11Up",&weight_CMS_eff_tau_trig_DM11Up,&b_weight_CMS_eff_tau_trig_DM11Up);
+     fChain->SetBranchAddress("weight_CMS_eff_tau_trig_DM11Down",&weight_CMS_eff_tau_trig_DM11Down,&b_weight_CMS_eff_tau_trig_DM11Down);
+
+     fChain->SetBranchAddress("weight_CMS_mutaufakeUp",&weight_CMS_mutaufakeUp,&b_weight_CMS_mutaufakeUp);
+     fChain->SetBranchAddress("weight_CMS_mutaufakeDown",&weight_CMS_mutaufakeDown,&b_weight_CMS_mutaufakeDown);
+
+     fChain->SetBranchAddress("weight_CMS_etaufakeUp",&weight_CMS_etaufakeUp,&b_weight_CMS_etaufakeUp);
+     fChain->SetBranchAddress("weight_CMS_etaufakeDown",&weight_CMS_etaufakeDown,&b_weight_CMS_etaufakeDown);
+
+   }
 
    fChain->SetBranchAddress("weight", &weight, &b_weight);
    fChain->SetBranchAddress("mcweight", &mcweight, &b_mcweight);
@@ -445,6 +476,13 @@ void SynchTree::ReadInit(TTree *tree, TString ch)
    fChain->SetBranchAddress("weight_CMS_PS_ISR_ggH_13TeVDown", &weight_CMS_PS_ISR_ggH_13TeVDown, &b_weight_CMS_PS_ISR_ggH_13TeVDown);
    fChain->SetBranchAddress("weight_CMS_PS_FSR_ggH_13TeVUp", &weight_CMS_PS_FSR_ggH_13TeVUp, &b_weight_CMS_PS_FSR_ggH_13TeVUp);
    fChain->SetBranchAddress("weight_CMS_PS_FSR_ggH_13TeVDown", &weight_CMS_PS_FSR_ggH_13TeVDown, &b_weight_CMS_PS_FSR_ggH_13TeVDown);
+
+   if (ch == "tt") {
+     for (unsigned int i=0; i<ff_sysnames.size(); ++i) {
+       fChain->SetBranchAddress("ff_"+TString(ff_sysnames[i]),&ff_sys[i],&b_ff_sys[i]);
+     }
+   }
+
 
    if ((ch=="mt")||(ch=="et")) {
      fChain->SetBranchAddress("ff_mva",&ff_mva,&b_ff_mva);
@@ -791,6 +829,38 @@ void SynchTree::WriteInit(TTree *tree, TString ch) {
   if (isGGHWeights) {
     for (int i=0; i<30; ++i) {
       fChain->Branch(TString(ggHWeights_name[i]),&ggHWeights[i],TString(ggHWeights_name[i])+"/F");      
+    }
+  }
+
+  if (ch == "tt") {
+
+    fChain->Branch("weight_CMS_eff_tauidUp",&weight_CMS_eff_tauidUp,"weight_CMS_eff_tauidUp/F");
+    fChain->Branch("weight_CMS_eff_tauidDown",&weight_CMS_eff_tauidDown,"weight_CMS_eff_tauidDown/F");
+    fChain->Branch("weight_CMS_eff_tauid_DM0Up",&weight_CMS_eff_tauid_DM0Up,"weight_CMS_eff_tauid_DM0Up/F");
+    fChain->Branch("weight_CMS_eff_tauid_DM0Down",&weight_CMS_eff_tauid_DM0Down,"weight_CMS_eff_tauid_DM0Down/F");
+    fChain->Branch("weight_CMS_eff_tauid_DM1Up",&weight_CMS_eff_tauid_DM1Up,"weight_CMS_eff_tauid_DM1Up/F");
+    fChain->Branch("weight_CMS_eff_tauid_DM1Down",&weight_CMS_eff_tauid_DM1Down,"weight_CMS_eff_tauid_DM1Down/F");
+    fChain->Branch("weight_CMS_eff_tauid_DM10Up",&weight_CMS_eff_tauid_DM10Up,"weight_CMS_eff_tauid_DM10Up/F");
+    fChain->Branch("weight_CMS_eff_tauid_DM10Down",&weight_CMS_eff_tauid_DM10Down,"weight_CMS_eff_tauid_DM10Down/F");
+    fChain->Branch("weight_CMS_eff_tauid_DM11Up",&weight_CMS_eff_tauid_DM11Up,"weight_CMS_eff_tauid_DM11Up/F");
+    fChain->Branch("weight_CMS_eff_tauid_DM11Down",&weight_CMS_eff_tauid_DM11Down,"weight_CMS_eff_tauid_DM11Down/F");
+    
+    fChain->Branch("weight_CMS_eff_tau_trigUp",&weight_CMS_eff_tau_trigUp,"weight_CMS_eff_tau_trigUp/F");
+    fChain->Branch("weight_CMS_eff_tau_trigDown",&weight_CMS_eff_tau_trigDown,"weight_CMS_eff_tau_trigDown/F");
+    fChain->Branch("weight_CMS_eff_tau_trig_DM0Up",&weight_CMS_eff_tau_trig_DM0Up,"weight_CMS_eff_tau_trig_DM0Up/F");
+    fChain->Branch("weight_CMS_eff_tau_trig_DM0Down",&weight_CMS_eff_tau_trig_DM0Down,"weight_CMS_eff_tau_trig_DM0Down/F");
+    fChain->Branch("weight_CMS_eff_tau_trig_DM1Up",&weight_CMS_eff_tau_trig_DM1Up,"weight_CMS_eff_tau_trig_DM1Up/F");
+    fChain->Branch("weight_CMS_eff_tau_trig_DM1Down",&weight_CMS_eff_tau_trig_DM1Down,"weight_CMS_eff_tau_trig_DM1Down/F");
+    fChain->Branch("weight_CMS_eff_tau_trig_DM10Up",&weight_CMS_eff_tau_trig_DM10Up,"weight_CMS_eff_tau_trig_DM10Up/F");
+    fChain->Branch("weight_CMS_eff_tau_trig_DM10Down",&weight_CMS_eff_tau_trig_DM10Down,"weight_CMS_eff_tau_trig_DM10Down/F");
+    fChain->Branch("weight_CMS_eff_tau_trig_DM11Up",&weight_CMS_eff_tau_trig_DM11Up,"weight_CMS_eff_tau_trig_DM11Up/F");
+    fChain->Branch("weight_CMS_eff_tau_trig_DM11Down",&weight_CMS_eff_tau_trig_DM11Down,"weight_CMS_eff_tau_trig_DM11Down/F");
+    
+    fChain->Branch("weight_CMS_mutaufakeUp",&weight_CMS_mutaufakeUp,"weight_CMS_mutaufakeUp/F");
+    fChain->Branch("weight_CMS_mutaufakeDown",&weight_CMS_mutaufakeDown,"weight_CMS_mutaufakeDown/F");
+
+    for (unsigned int i=0; i<ff_sysnames.size(); ++i) {
+      fChain->Branch("ff_"+TString(ff_sysnames[i]),&ff_sys[i],"ff_"+TString(ff_sysnames[i])+"/F");
     }
   }
 

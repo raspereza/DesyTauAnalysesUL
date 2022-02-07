@@ -649,7 +649,7 @@ void svfit_variables(TString ch, const AC1B *analysisTree, SynchTree *otree, con
 								    otree->tau_decay_mode_2));
     }
     if (cfg->get<bool>("ApplySVFit")) {
-      int verbosity = 1;
+      int verbosity = 0;
       ClassicSVfit svFitAlgo(verbosity);
       double kappa = 4.; // use 3 for emu, 4 for etau and mutau, 5 for tautau channel
       if (ch == "em") 

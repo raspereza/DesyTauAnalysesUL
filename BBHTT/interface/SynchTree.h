@@ -57,6 +57,35 @@ public :
     "H_i_ratio_hdamp_down",
   };
   
+  const std::vector<std::string> ff_sysnames = {
+    "qcd_stat_unc1_njet0_dm0",
+    "qcd_stat_unc1_njet0_dm1",
+    "qcd_stat_unc1_njet0_dm10",
+    "qcd_stat_unc1_njet0_dm11",
+    "qcd_stat_unc1_njet1_dm0",
+    "qcd_stat_unc1_njet1_dm1",
+    "qcd_stat_unc1_njet1_dm10",
+    "qcd_stat_unc1_njet1_dm11",
+    "qcd_stat_unc1_njet2_dm0",
+    "qcd_stat_unc1_njet2_dm1",
+    "qcd_stat_unc1_njet2_dm10",
+    "qcd_stat_unc1_njet2_dm11",
+    "qcd_stat_unc2_njet0_dm0",
+    "qcd_stat_unc2_njet0_dm1",
+    "qcd_stat_unc2_njet0_dm10",
+    "qcd_stat_unc2_njet0_dm11",
+    "qcd_stat_unc2_njet1_dm0",
+    "qcd_stat_unc2_njet1_dm1",
+    "qcd_stat_unc2_njet1_dm10",
+    "qcd_stat_unc2_njet1_dm11",
+    "qcd_stat_unc2_njet2_dm0",
+    "qcd_stat_unc2_njet2_dm1",
+    "qcd_stat_unc2_njet2_dm10",
+    "qcd_stat_unc2_njet2_dm11",
+    "qcd_met",
+    "qcd_syst",
+    "qcd_pt2",
+  };
 
 
   TTree *fChain;   //!pointer to the analyzed TTree or TChain
@@ -471,6 +500,54 @@ public :
   Float_t weight_CMS_mufake_mt_MVADM10_13TeVDown;
   Float_t weight_CMS_mufake_mt_MVADM11_13TeVDown;
 
+  Float_t weight_CMS_eff_tauid_DM0Up;
+  Float_t weight_CMS_eff_tauid_DM0Down;
+  Float_t weight_CMS_eff_tauid_DM1Up;
+  Float_t weight_CMS_eff_tauid_DM1Down;
+  Float_t weight_CMS_eff_tauid_DM10Up;
+  Float_t weight_CMS_eff_tauid_DM10Down;
+  Float_t weight_CMS_eff_tauid_DM11Up;
+  Float_t weight_CMS_eff_tauid_DM11Down;
+  Float_t weight_CMS_eff_tauidUp;
+  Float_t weight_CMS_eff_tauidDown;
+
+  Float_t weight_CMS_eff_tau_trig_DM0Up;
+  Float_t weight_CMS_eff_tau_trig_DM0Down;
+  Float_t weight_CMS_eff_tau_trig_DM1Up;
+  Float_t weight_CMS_eff_tau_trig_DM1Down;
+  Float_t weight_CMS_eff_tau_trig_DM10Up;
+  Float_t weight_CMS_eff_tau_trig_DM10Down;
+  Float_t weight_CMS_eff_tau_trig_DM11Up;
+  Float_t weight_CMS_eff_tau_trig_DM11Down;
+  Float_t weight_CMS_eff_tau_trigUp;
+  Float_t weight_CMS_eff_tau_trigDown;
+
+  Float_t weight_CMS_mutaufake_eta0Up;
+  Float_t weight_CMS_mutaufake_eta0Down;
+  Float_t weight_CMS_mutaufake_eta1Up;
+  Float_t weight_CMS_mutaufake_eta1Down;
+  Float_t weight_CMS_mutaufake_eta2Up;
+  Float_t weight_CMS_mutaufake_eta2Down;
+  Float_t weight_CMS_mutaufake_eta3Up;
+  Float_t weight_CMS_mutaufake_eta3Down;
+  Float_t weight_CMS_mutaufake_eta4Up;
+  Float_t weight_CMS_mutaufake_eta4Down;
+  Float_t weight_CMS_mutaufakeUp;
+  Float_t weight_CMS_mutaufakeDown;
+
+  Float_t weight_CMS_etaufake_eta0Up;
+  Float_t weight_CMS_etaufake_eta0Down;
+  Float_t weight_CMS_etaufake_eta1Up;
+  Float_t weight_CMS_etaufake_eta1Down;
+  Float_t weight_CMS_etaufake_eta2Up;
+  Float_t weight_CMS_etaufake_eta2Down;
+  Float_t weight_CMS_etaufake_eta3Up;
+  Float_t weight_CMS_etaufake_eta3Down;
+  Float_t weight_CMS_etaufake_eta4Up;
+  Float_t weight_CMS_etaufake_eta4Down;
+  Float_t weight_CMS_etaufakeUp;
+  Float_t weight_CMS_etaufakeDown;
+
   Float_t weight_CMS_scale_gg_13TeVUp;
   Float_t weight_CMS_scale_gg_13TeVDown;
   Float_t weight_CMS_PS_ISR_ggH_13TeVUp;
@@ -806,6 +883,8 @@ public :
   Bool_t apply_recoil;
 
   Float_t ggHWeights[30];
+
+  Float_t ff_sys[30];
 
   //////////////////////////////////////////////
   //            List of branches              //
@@ -1244,6 +1323,54 @@ public :
   TBranch        *b_qcdweight_isolationcorrection;
   TBranch        *b_qcdweight;
 
+  TBranch *b_weight_CMS_eff_tauid_DM0Up;
+  TBranch *b_weight_CMS_eff_tauid_DM0Down;
+  TBranch *b_weight_CMS_eff_tauid_DM1Up;
+  TBranch *b_weight_CMS_eff_tauid_DM1Down;
+  TBranch *b_weight_CMS_eff_tauid_DM10Up;
+  TBranch *b_weight_CMS_eff_tauid_DM10Down;
+  TBranch *b_weight_CMS_eff_tauid_DM11Up;
+  TBranch *b_weight_CMS_eff_tauid_DM11Down;
+  TBranch *b_weight_CMS_eff_tauidUp;
+  TBranch *b_weight_CMS_eff_tauidDown;
+
+  TBranch *b_weight_CMS_eff_tau_trig_DM0Up;
+  TBranch *b_weight_CMS_eff_tau_trig_DM0Down;
+  TBranch *b_weight_CMS_eff_tau_trig_DM1Up;
+  TBranch *b_weight_CMS_eff_tau_trig_DM1Down;
+  TBranch *b_weight_CMS_eff_tau_trig_DM10Up;
+  TBranch *b_weight_CMS_eff_tau_trig_DM10Down;
+  TBranch *b_weight_CMS_eff_tau_trig_DM11Up;
+  TBranch *b_weight_CMS_eff_tau_trig_DM11Down;
+  TBranch *b_weight_CMS_eff_tau_trigUp;
+  TBranch *b_weight_CMS_eff_tau_trigDown;
+
+  TBranch *b_weight_CMS_mutaufake_eta0Up;
+  TBranch *b_weight_CMS_mutaufake_eta0Down;
+  TBranch *b_weight_CMS_mutaufake_eta1Up;
+  TBranch *b_weight_CMS_mutaufake_eta1Down;
+  TBranch *b_weight_CMS_mutaufake_eta2Up;
+  TBranch *b_weight_CMS_mutaufake_eta2Down;
+  TBranch *b_weight_CMS_mutaufake_eta3Up;
+  TBranch *b_weight_CMS_mutaufake_eta3Down;
+  TBranch *b_weight_CMS_mutaufake_eta4Up;
+  TBranch *b_weight_CMS_mutaufake_eta4Down;
+  TBranch *b_weight_CMS_mutaufakeUp;
+  TBranch *b_weight_CMS_mutaufakeDown;
+
+  TBranch *b_weight_CMS_etaufake_eta0Up;
+  TBranch *b_weight_CMS_etaufake_eta0Down;
+  TBranch *b_weight_CMS_etaufake_eta1Up;
+  TBranch *b_weight_CMS_etaufake_eta1Down;
+  TBranch *b_weight_CMS_etaufake_eta2Up;
+  TBranch *b_weight_CMS_etaufake_eta2Down;
+  TBranch *b_weight_CMS_etaufake_eta3Up;
+  TBranch *b_weight_CMS_etaufake_eta3Down;
+  TBranch *b_weight_CMS_etaufake_eta4Up;
+  TBranch *b_weight_CMS_etaufake_eta4Down;
+  TBranch *b_weight_CMS_etaufakeUp;
+  TBranch *b_weight_CMS_etaufakeDown;
+
   TBranch	 *b_topptweight;
   TBranch	 *b_zptweight;
   TBranch	 *b_zptembweight;
@@ -1362,6 +1489,8 @@ public :
   
   TBranch        *b_mbb;
   TBranch        *b_dRbb;
+
+  TBranch        *b_ff_sys[30];
 
   //Misc  
 

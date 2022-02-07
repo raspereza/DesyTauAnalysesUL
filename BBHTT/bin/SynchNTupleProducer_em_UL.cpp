@@ -529,7 +529,7 @@ int main(int argc, char * argv[]){
   TH2D *h_zptweight = (TH2D*)f_zptweight->Get("zptmass_histo");
 
   // Zpt reweighting for embedded
-  TFile * f_zptweight_emb = new TFile(TString(cmsswBase) + "/" + ZptEmbweightFile, "read");
+  TFile * f_zptweight_emb = new TFile(TString(cmsswBase) + "/src/" + ZptEmbweightFile, "read");
 
   TString Era("2016");
   if (era==2017) Era = "2017";
