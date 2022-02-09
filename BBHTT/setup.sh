@@ -45,7 +45,7 @@ cd ${CMSSW_BASE}/src/
 
 
 cd ${CMSSW_BASE}/src
-git clone https://github.com/cardinia/DesyTauAnalysesUL DesyTauAnalyses -b dev
+git clone https://github.com/DesyTau/DesyTauAnalysesUL.git DesyTauAnalyses -b bbHTT
 
 
 cp ${CMSSW_BASE}/src/DesyTauAnalyses/patch/SVFit/SVfitStandaloneAlgorithm.h TauAnalysis/SVfitStandalone/interface/
