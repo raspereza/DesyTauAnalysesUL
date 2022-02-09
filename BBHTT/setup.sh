@@ -56,6 +56,9 @@ rm TauAnalysis/SVfitStandalone/src/SVfitStandaloneQuantities.cc
 
 cd ${CMSSW_BASE}/src
 
+cp -r /nfs/dust/cms/user/cardinia/public/DesyTau_data/data ${CMSSW_BASE}/src/DesyTauAnalyses/Common/.
+
+
 scram b -j 16
 scram b -j 16
 
