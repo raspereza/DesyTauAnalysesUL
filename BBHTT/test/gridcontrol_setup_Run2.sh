@@ -3,19 +3,21 @@
 YEAR=20${1}
 CHANNEL=$2
 if [[ $CHANNEL == "em" ]]; then
-    OUTDIR=./emu/20$YEAR
+    OUTDIR=./emu/$YEAR
 else  
     if [[ $CHANNEL == "tt" ]]; then
-	OUTDIR=./tautau/20$YEAR
+	OUTDIR=./tautau/$YEAR
     else
 	echo "ERROR: please run the script with ./gridcontrol_setup_mt_Run2.sh <year={16,17,18}> <channel={tt,em}>"
 	exit
     fi
 fi
 
+echo $OUTDIR
+
 if [ ! -d "$OUTDIR" ]; then
   mkdir ${OUTDIR}
-  cp ./run_${CHANNEL}_synchntyples.sh $OUTDIR/run_synchntyples.sh
+  cp ./run_${CHANNEL}_synchntuples.sh $OUTDIR/run_synchntuples.sh
   cp ./split_filelist.sh $OUTDIR/.
   cp ./gc_synch.conf $OUTDIR/. 
   cp ./make_parameter_file_$YEAR.sh $OUTDIR/.

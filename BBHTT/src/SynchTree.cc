@@ -76,13 +76,14 @@ void SynchTree::ReadInit(TTree *tree, TString ch)
    fChain->SetBranchAddress("trkeffweight_1", &trkeffweight_1, &b_trkeffweight_1);
    fChain->SetBranchAddress("trigweight_1", &trigweight_1, &b_trigweight_1);
 
+   fChain->SetBranchAddress("puppimt_1", &puppimt_1, &b_puppimt_1);
+   fChain->SetBranchAddress("pt_uncorr_1", &pt_uncorr_1, &b_pt_uncorr_1);
+   fChain->SetBranchAddress("d0_1", &d0_1, &b_d0_1);
+   fChain->SetBranchAddress("dZ_1", &dZ_1, &b_dZ_1);
+   fChain->SetBranchAddress("mt_1", &mt_1, &b_mt_1);
    if (ch != "em") {
    
-     fChain->SetBranchAddress("puppimt_1", &puppimt_1, &b_puppimt_1);
-     fChain->SetBranchAddress("pt_uncorr_1", &pt_uncorr_1, &b_pt_uncorr_1);
-     fChain->SetBranchAddress("d0_1", &d0_1, &b_d0_1);
-     fChain->SetBranchAddress("dZ_1", &dZ_1, &b_dZ_1);
-     fChain->SetBranchAddress("mt_1", &mt_1, &b_mt_1);
+
      fChain->SetBranchAddress("tau_decay_mode_1", &tau_decay_mode_1, &b_tau_decay_mode_1); 
      fChain->SetBranchAddress("dm_1", &dm_1, &b_dm_1);
      fChain->SetBranchAddress("dmMVA_1", &dmMVA_1, &b_dmMVA_1);
@@ -170,12 +171,12 @@ void SynchTree::ReadInit(TTree *tree, TString ch)
    fChain->SetBranchAddress("trkeffweight_2", &trkeffweight_2, &b_trkeffweight_2);
    fChain->SetBranchAddress("trigweight_2", &trigweight_2, &b_trigweight_2);
 
+   fChain->SetBranchAddress("pt_uncorr_2", &pt_uncorr_2, &b_pt_uncorr_2);
+   fChain->SetBranchAddress("d0_2", &d0_2, &b_d0_2);
+   fChain->SetBranchAddress("dZ_2", &dZ_2, &b_dZ_2);
+   fChain->SetBranchAddress("mt_2", &mt_2, &b_mt_2);
+   fChain->SetBranchAddress("puppimt_2", &puppimt_2, &b_puppimt_2);
    if (ch != "em") {
-     fChain->SetBranchAddress("pt_uncorr_2", &pt_uncorr_2, &b_pt_uncorr_2);
-     fChain->SetBranchAddress("d0_2", &d0_2, &b_d0_2);
-     fChain->SetBranchAddress("dZ_2", &dZ_2, &b_dZ_2);
-     fChain->SetBranchAddress("mt_2", &mt_2, &b_mt_2);
-     fChain->SetBranchAddress("puppimt_2", &puppimt_2, &b_puppimt_2);
      fChain->SetBranchAddress("tau_decay_mode_2", &tau_decay_mode_2, &b_tau_decay_mode_2); 
      fChain->SetBranchAddress("dm_2", &dm_2, &b_dm_2);
      fChain->SetBranchAddress("dmMVA_2", &dmMVA_2, &b_dmMVA_2);
@@ -604,10 +605,10 @@ void SynchTree::ReadInit(TTree *tree, TString ch)
    fChain->SetBranchAddress("mbb",&mbb,&b_mbb);
    fChain->SetBranchAddress("dRbb",&dRbb,&b_dRbb);
 
-   if ((ch=="mt")||(ch=="et")) {
-     fChain->SetBranchAddress("njetingap", &njetingap, &b_njetingap);
-     fChain->SetBranchAddress("njetingap20", &njetingap20, &b_njetingap20);
-   }
+   //if ((ch=="mt")||(ch=="et")) {
+   fChain->SetBranchAddress("njetingap", &njetingap, &b_njetingap);
+   fChain->SetBranchAddress("njetingap20", &njetingap20, &b_njetingap20);
+     //}
    //   fChain->SetBranchAddress("njetshad", &njetshad, &b_njetshad);
    //   fChain->SetBranchAddress("njetspt20", &njetspt20, &b_njetspt20);
    
@@ -873,12 +874,12 @@ void SynchTree::WriteInit(TTree *tree, TString ch) {
   fChain->Branch("gen_match_1", &gen_match_1, "gen_match_1/I");
   fChain->Branch("q_1", &q_1, "q_1/I");
   fChain->Branch("iso_1", &iso_1, "iso_1/F");
+  fChain->Branch("d0_1", &d0_1, "d0_1/F");
+  fChain->Branch("dZ_1", &dZ_1, "dZ_1/F");
+  fChain->Branch("pt_uncorr_1", &pt_uncorr_1, "pt_uncorr_1/F");
+  fChain->Branch("mt_1", &mt_1, "mt_1/F");
+  fChain->Branch("puppimt_1", &puppimt_1, "puppimt_1/F");
   if (ch != "em") {
-    fChain->Branch("d0_1", &d0_1, "d0_1/F");
-    fChain->Branch("dZ_1", &dZ_1, "dZ_1/F");
-    fChain->Branch("pt_uncorr_1", &pt_uncorr_1, "pt_uncorr_1/F");
-    fChain->Branch("mt_1", &mt_1, "mt_1/F");
-    fChain->Branch("puppimt_1", &puppimt_1, "puppimt_1/F");
     fChain->Branch("tau_decay_mode_1", &tau_decay_mode_1, "tau_decay_mode_1/I"); 
     fChain->Branch("dm_1", &dm_1, "dm_1/F");
     fChain->Branch("dmMVA_1", &dmMVA_1, "dmMVA_1/F");
@@ -960,12 +961,12 @@ void SynchTree::WriteInit(TTree *tree, TString ch) {
   fChain->Branch("gen_match_2", &gen_match_2, "gen_match_2/I");
   fChain->Branch("q_2", &q_2, "q_2/I");
   fChain->Branch("iso_2", &iso_2, "iso_2/F");
+  fChain->Branch("pt_uncorr_2", &pt_uncorr_2, "pt_uncorr_2/F");
+  fChain->Branch("d0_2", &d0_2, "d0_2/F");
+  fChain->Branch("dZ_2", &dZ_2, "dZ_2/F");
+  fChain->Branch("mt_2", &mt_2, "mt_2/F");
+  fChain->Branch("puppimt_2", &puppimt_2, "puppimt_2/F");
   if (ch != "em") {
-    fChain->Branch("pt_uncorr_2", &pt_uncorr_2, "pt_uncorr_2/F");
-    fChain->Branch("d0_2", &d0_2, "d0_2/F");
-    fChain->Branch("dZ_2", &dZ_2, "dZ_2/F");
-    fChain->Branch("mt_2", &mt_2, "mt_2/F");
-    fChain->Branch("puppimt_2", &puppimt_2, "puppimt_2/F");
     fChain->Branch("tau_decay_mode_2", &tau_decay_mode_2, "tau_decay_mode_2/I"); 
     fChain->Branch("dm_2", &dm_2, "dm_2/F");
     fChain->Branch("dmMVA_2", &dmMVA_2, "dmMVA_2/F");

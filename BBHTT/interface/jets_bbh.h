@@ -1,5 +1,5 @@
-#ifndef NTupleMakerLepTauFunctions_h
-#define NTupleMakerLepTauFunctions_h
+#ifndef BBHTTLepTauFunctions_h
+#define BBHTTLepTauFunctions_h
 
 #include "DesyTauAnalyses/Common/interface/Config.h"
 #include "DesyTauAnalyses/Common/interface/AC1B.h"
@@ -249,8 +249,13 @@ namespace jets{
     }
   }
 
- void counting_jets(const AC1B *analysisTree, SynchTree *otree, const Config *cfg, const btag_scaling_inputs *inputs_btag_scaling, 
-		    TString JESname = "central", TString direction = "None",  JESUncertainties * jecUncertainties = 0){
+ void counting_jets(const AC1B *analysisTree, 
+		    SynchTree *otree, 
+		    const Config *cfg, 
+		    const btag_scaling_inputs *inputs_btag_scaling, 
+		    TString JESname = "central", 
+		    TString direction = "None",  
+		    JESUncertainties * jecUncertainties = 0){
 
    float MaxBJetPt = 1000.;
    float MaxLJetPt = 1000.;
@@ -261,6 +266,12 @@ namespace jets{
    vector<unsigned int> jetspt20; jetspt20.clear();
    vector<unsigned int> bjets; bjets.clear();
    vector<unsigned int> bjetsRaw; bjetsRaw.clear();
+
+   //   TLorentzVector leadingJetLV; leadingJetLV.SetXYZT(0.,0.,0.,0.);
+   //   TLorentzVector trailingJetLV; trailingJetLV.SetXYZT(0.,0.,0.,0.);
+
+   //   TLorentzVector leadingBJetLV; leadingBJetLV.SetXYZT(0.,0.,0.,0.);
+   //   TLorentzVector trailingBJetLV; trailingBJetLV.SetXYZT(0.,0.,0.,0.);
    
    int indexLeadingJet = -1;
    float ptLeadingJet = -1;
@@ -352,12 +363,11 @@ namespace jets{
      float dR2 = deltaR(analysisTree->pfjet_eta[jet], analysisTree->pfjet_phi[jet], otree->eta_2, otree->phi_2);
      if (dR2 <= dRJetLeptonCut) continue;
      
-     if (correctedJet.Pt()>15 && !(is2017 && rawPt < 50 && absJetEta > 2.65 && absJetEta < 3.139))
+     if (rawPt>10 && !(is2017 && rawPt < 50 && absJetEta > 2.65 && absJetEta < 3.139)) {
        correctedJets += correctedJet;
-     
-     if (uncorrectedJet.Pt()>15 && !(is2017 && rawPt < 50 && absJetEta > 2.65 && absJetEta < 3.139))
        uncorrectedJets += uncorrectedJet;        
-     
+     }     
+
      // skip prefiring region for 2017:
      if(is2017 && rawPt < 50 && absJetEta > 2.65 && absJetEta < 3.139) continue; 
      
@@ -516,19 +526,19 @@ namespace jets{
      float mety = otree->met * sin(otree->metphi);
      float metx_puppi = otree->puppimet * cos(otree->puppimetphi);
      float mety_puppi = otree->puppimet * sin(otree->puppimetphi);
-     
-     //    std::cout << JESname << " : " << direction << std::endl;
-     //    std::cout << "  PuppiMetX = " << metx_puppi << "  PuppiMetY = " << mety_puppi << std::endl; 
-     //    std::cout << "  UncorJetX = " << uncorrectedJets.Px() << " UncorJetY = " << uncorrectedJets.Py() << endl;
-     //    std::cout << "  CorJetX   = " << uncorrectedJets.Px() << " CorJetY   = " << uncorrectedJets.Py() << endl;
 
+     /*     
+     std::cout << JESname << " : " << direction << std::endl;
+     std::cout << "  Uncorr    : PuppiMetX = " << metx_puppi << "  PuppiMetY = " << mety_puppi << std::endl; 
+     std::cout << "  UncorJetX = " << uncorrectedJets.Px() << " UncorJetY = " << uncorrectedJets.Py() << endl;
+     std::cout << "  CorJetX   = " << correctedJets.Px() << " CorJetY   = " << correctedJets.Py() << endl;
+     */
      metx = metx + uncorrectedJets.Px() - correctedJets.Px();
      mety = mety + uncorrectedJets.Py() - correctedJets.Py();
      metx_puppi = metx_puppi + uncorrectedJets.Px() - correctedJets.Px();
      mety_puppi = mety_puppi + uncorrectedJets.Py() - correctedJets.Py();
      
-     //    std::cout << " corrected -> " << std::endl;
-     //    std::cout << " PuppiMetX =" << metx_puppi << "  PuppiMetY = " << mety_puppi << std::endl;
+     //     std::cout << "  Corr      : PuppiMetX =" << metx_puppi << "  PuppiMetY = " << mety_puppi << std::endl;
      
      otree->met = sqrt(metx*metx+mety*mety);
      otree->metphi = atan2(mety,metx);
@@ -559,10 +569,12 @@ namespace jets{
      otree->bpt_1   = get_jetPt(analysisTree, indexLeadingBJet, JESname, direction, jecUncertainties);
      otree->beta_1  = analysisTree->pfjet_eta[indexLeadingBJet];
      otree->bphi_1  = analysisTree->pfjet_phi[indexLeadingBJet];
-     if (BTagAlgorithm == "DeepCSV")
-       otree->bcsv_1  = analysisTree->pfjet_btag[indexLeadingBJet][nBTagDiscriminant1] + analysisTree->pfjet_btag[indexLeadingBJet][nBTagDiscriminant2];
+     if (BTagAlgorithm == "DeepFlavour")
+       otree->bcsv_1  = analysisTree->pfjet_btag[indexLeadingBJet][nBTagDiscriminant1] + analysisTree->pfjet_btag[indexLeadingBJet][nBTagDiscriminant2] + analysisTree->pfjet_btag[indexLeadingBJet][nBTagDiscriminant3];
+     else if (BTagAlgorithm == "DeepCSV")
+       otree->bcsv_1  = analysisTree->pfjet_btag[indexLeadingBJet][nBTagDiscriminant1] + analysisTree->pfjet_btag[indexLeadingBJet][nBTagDiscriminant2];       
      else 
-       otree->bcsv_1  = -100;
+       otree->bcsv_1  = -100.;
    }
    else {
      otree->bpt_1   = -10;
@@ -576,10 +588,12 @@ namespace jets{
      otree->bpt_2   = get_jetPt(analysisTree, indexSubLeadingBJet, JESname, direction, jecUncertainties);
      otree->beta_2  = analysisTree->pfjet_eta[indexSubLeadingBJet];
      otree->bphi_2  = analysisTree->pfjet_phi[indexSubLeadingBJet];
-     if (BTagAlgorithm == "DeepCSV")
+     if (BTagAlgorithm == "DeepFlavour")
+       otree->bcsv_2  = analysisTree->pfjet_btag[indexSubLeadingBJet][nBTagDiscriminant1] + analysisTree->pfjet_btag[indexSubLeadingBJet][nBTagDiscriminant2] + analysisTree->pfjet_btag[indexLeadingBJet][nBTagDiscriminant3];
+     else if (BTagAlgorithm == "DeepCSV")
        otree->bcsv_2  = analysisTree->pfjet_btag[indexSubLeadingBJet][nBTagDiscriminant1] + analysisTree->pfjet_btag[indexSubLeadingBJet][nBTagDiscriminant2];
      else 
-       otree->bcsv_2  = -100;
+       otree->bcsv_2  = -100.;
      
    }
    else {
@@ -596,7 +610,10 @@ namespace jets{
      otree->jpt_1 = get_jetPt(analysisTree, indexLeadingJet, JESname, direction, jecUncertainties);
      otree->jeta_1 = analysisTree->pfjet_eta[indexLeadingJet];
      otree->jphi_1 = analysisTree->pfjet_phi[indexLeadingJet];
-     otree->jcsv_1 = analysisTree->pfjet_btag[indexLeadingJet][1] + analysisTree->pfjet_btag[indexLeadingJet][2];
+     if (BTagAlgorithm == "DeepFlavour")
+       otree->jcsv_1 = analysisTree->pfjet_btag[indexLeadingJet][nBTagDiscriminant1] + analysisTree->pfjet_btag[indexLeadingJet][nBTagDiscriminant1]+analysisTree->pfjet_btag[indexLeadingJet][nBTagDiscriminant3];
+     else
+       otree->jcsv_1 = -100.;
    }
    else {
      otree->jpt_1 = -10;
@@ -610,15 +627,32 @@ namespace jets{
      otree->jpt_2 = get_jetPt(analysisTree, indexSubLeadingJet, JESname, direction, jecUncertainties);
      otree->jeta_2 = analysisTree->pfjet_eta[indexSubLeadingJet];
      otree->jphi_2 = analysisTree->pfjet_phi[indexSubLeadingJet];
-     otree->jcsv_2 = analysisTree->pfjet_btag[indexSubLeadingJet][1] + analysisTree->pfjet_btag[indexSubLeadingJet][2];
-   }
+     if (BTagAlgorithm == "DeepFlavour") 
+       otree->jcsv_2 = analysisTree->pfjet_btag[indexSubLeadingJet][nBTagDiscriminant1] + analysisTree->pfjet_btag[indexSubLeadingJet][nBTagDiscriminant2] + analysisTree->pfjet_btag[indexSubLeadingJet][nBTagDiscriminant3];
+     else 
+       otree->jcsv_2 = -100.;
+   }	 
    else {
      otree->jpt_2 = -10;
      otree->jeta_2 = -10;
      otree->jphi_2 = -10;
      otree->jcsv_2 = -10;
    }
-   
+   // di-bjet variables 
+   if (indexLeadingBJet >= 0 && indexSubLeadingBJet >= 0) {
+     TLorentzVector jet1;
+     TLorentzVector jet2;
+
+     jet1.SetPtEtaPhiE(otree->bpt_1, otree->beta_1, otree->bphi_1, get_jetE(analysisTree, indexLeadingBJet, JESname, direction, jecUncertainties));
+     jet2.SetPtEtaPhiE(otree->bpt_2, otree->beta_2, otree->bphi_2, get_jetE(analysisTree, indexSubLeadingBJet, JESname, direction, jecUncertainties));
+
+     otree->mbb = (jet1+jet2).M();
+
+     otree->dRbb = deltaR(otree->beta_1,otree->bphi_1,
+			  otree->beta_2,otree->bphi_2);
+
+   }
+
    // dijet variables
    if (indexLeadingJet >= 0 && indexSubLeadingJet >= 0) {
      otree->njetingap = 0;

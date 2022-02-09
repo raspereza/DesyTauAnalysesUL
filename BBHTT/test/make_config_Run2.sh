@@ -25,7 +25,14 @@ if [ $DATA_TYPE != 'data' ] && [ $DATA_TYPE != 'MC' ] && [ $DATA_TYPE != 'embedd
     exit
 
 fi
-OUTDIR=20$YEAR
+
+if [[ $CHANNEL == "em" ]]; then
+    OUTDIR=./emu/20$YEAR
+elif [[ $CHANNEL == "tt" ]]; then
+    OUTDIR=./tautau/20$YEAR
+fi
+
+
 if [ ! -d "$OUTDIR" ]; then
   mkdir $OUTDIR
 fi

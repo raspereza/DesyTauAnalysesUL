@@ -8,7 +8,7 @@
 #include "DesyTauAnalyses/Common/interface/Config.h"
 #include "DesyTauAnalyses/Common/interface/AC1B.h"
 #include <DesyTauAnalyses/Common/interface/functions.h>
-#include <DesyTauAnalyses/BBHTT/interface/leptau_jets.h>
+#include <DesyTauAnalyses/BBHTT/interface/jets_bbh.h>
 #include <DesyTauAnalyses/BBHTT/interface/Systematics.h>
 
 using namespace utils;

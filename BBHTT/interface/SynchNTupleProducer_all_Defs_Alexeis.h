@@ -45,7 +45,7 @@
 #include "DesyTauAnalyses/BBHTT/interface/functionsSynch2017.h"
 #include "DesyTauAnalyses/BBHTT/interface/functionsCP.h"
 
-#include "DesyTauAnalyses/BBHTT/interface/leptau_jets.h"
+#include "DesyTauAnalyses/BBHTT/interface/jets_bbh.h"
 #include "DesyTauAnalyses/Common/interface/PileUp.h"
 #include "HTT-utilities/RecoilCorrections_KIT/interface/RecoilCorrector.h"
 #include "HiggsCPinTauDecays/IpCorrection/interface/IpCorrection.h"
