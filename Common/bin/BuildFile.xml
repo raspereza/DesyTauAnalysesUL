@@ -1,0 +1,4 @@
+<Flags CXXFLAGS="-Wno-unused-variable -Wno-error=unused-but-set-variable -Wno-error=maybe-uninitialized" />
+
+<bin name="Splitter" file="Splitter.cpp">
+</bin>

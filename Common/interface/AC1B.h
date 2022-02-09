@@ -559,6 +559,7 @@ public :
    Float_t         genparticles_lheWPt;
    UInt_t          genparticles_noutgoing;
    Int_t           genparticles_noutgoing_NLO;
+   Int_t           genparticles_nbjets;
    UInt_t          genparticles_count;
    Float_t         genparticles_e[200];   //[genparticles_count]
    Float_t         genparticles_px[200];   //[genparticles_count]
@@ -1374,6 +1375,7 @@ public :
    TBranch        *b_genparticles_lheWPt;   //!
    TBranch        *b_genparticles_noutgoing;   //!
    TBranch        *b_genparticles_noutgoing_NLO;   //!
+   TBranch        *b_genparticles_nbjets;
    TBranch        *b_genparticles_count;   //!
    TBranch        *b_genparticles_e;   //!
    TBranch        *b_genparticles_px;   //!
@@ -2279,6 +2281,7 @@ void AC1B::Init(TTree *tree, bool isData)
    fChain->SetBranchAddress("genparticles_lheHt", &genparticles_lheHt, &b_genparticles_lheHt);
    fChain->SetBranchAddress("genparticles_lheWPt", &genparticles_lheWPt, &b_genparticles_lheWPt);
    fChain->SetBranchAddress("genparticles_noutgoing", &genparticles_noutgoing, &b_genparticles_noutgoing);
+   fChain->SetBranchAddress("genparticles_nbjets", &genparticles_nbjets, &b_genparticles_nbjets);
    fChain->SetBranchAddress("genparticles_noutgoing_NLO", &genparticles_noutgoing_NLO, &b_genparticles_noutgoing_NLO);
    fChain->SetBranchAddress("genparticles_count", &genparticles_count, &b_genparticles_count);
    fChain->SetBranchAddress("genparticles_e", genparticles_e, &b_genparticles_e);

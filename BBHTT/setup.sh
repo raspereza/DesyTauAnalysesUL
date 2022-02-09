@@ -27,7 +27,16 @@ git clone https://github.com/svfit/ClassicSVfit TauAnalysis/ClassicSVfit -b fast
 git clone https://github.com/svfit/SVfitTF TauAnalysis/SVfitTF
 
 cd ${CMSSW_BASE}/src
+git clone https://github.com/CMS-HTT/RecoilCorrections.git HTT-utilities/RecoilCorrections
+
+cd ${CMSSW_BASE}/src
 git clone https://github.com/marmeyer/RecoilCorrections.git HTT-utilities/RecoilCorrections_KIT
+
+cd ${CMSSW_BASE}/src
+git clone https://github.com/CMS-HTT/CorrectionsWorkspace HTT-utilities/CorrectionsWorkspace
+cd ${CMSSW_BASE}/src/HTT-utilities/CorrectionsWorkspace
+root -l -q CrystalBallEfficiency.cxx++
+cd ${CMSSW_BASE}/src
 
 git clone https://github.com/veelken/SVfit_standalone.git ${CMSSW_BASE}/src/TauAnalysis/SVfitStandalone
 cd ${CMSSW_BASE}/src/TauAnalysis/SVfitStandalone
@@ -36,7 +45,7 @@ cd ${CMSSW_BASE}/src/
 
 
 cd ${CMSSW_BASE}/src
-git clone https://github.com/DesyTau/DesyTauAnalysesUL DesyTauAnalyses
+git clone https://github.com/DesyTau/DesyTauAnalysesUL.git DesyTauAnalyses -b bbHTT
 
 
 cp ${CMSSW_BASE}/src/DesyTauAnalyses/patch/SVFit/SVfitStandaloneAlgorithm.h TauAnalysis/SVfitStandalone/interface/
@@ -46,6 +55,9 @@ rm TauAnalysis/SVfitStandalone/interface/SVfitStandaloneQuantities.h
 rm TauAnalysis/SVfitStandalone/src/SVfitStandaloneQuantities.cc
 
 cd ${CMSSW_BASE}/src
+
+cp -r /nfs/dust/cms/user/cardinia/public/DesyTau_data/data ${CMSSW_BASE}/src/DesyTauAnalyses/Common/.
+
 
 scram b -j 16
 scram b -j 16
