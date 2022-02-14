@@ -4,7 +4,7 @@ dirEmbedded=/pnfs/desy.de/cms/tier2/store/user/rasp/ntuples_Dec2020/2018/emb
 dirMC=/pnfs/desy.de/cms/tier2/store/user/rasp/ntuples_Dec2020/2018/mc
 dirMC2=/pnfs/desy.de/cms/tier2/store/user/rasp/ntuples_Dec2020/2018/mc_2
 dirMC_UL=/pnfs/desy.de/cms/tier2/store/user/acardini/ntuples/Oktoberfest21/2018/mc
-dirSignal_UL=/pnfs/desy.de/cms/tier2/store/user/rasp/ntuples/UL/2018/mc
+dirSignal_UL=/pnfs/desy.de/cms/tier2/store/user/acardini/ntuples/Oktoberfest21/2018/mc
 
 CHANNEL=$1
 
@@ -77,15 +77,21 @@ ls $dirMC/HWminusJ_HToWW_M125_13TeV_powheg_jhugen724_pythia8_TuneCP5/*root > $OU
 ls $dirMC/HWplusJ_HToWW_M125_13TeV_powheg_jhugen724_pythia8_TuneCP5/*root > $OUTDIR/HWplusJ_HToWW_M125
 ls $dirMC/HZJ_HToWW_M125_13TeV_powheg_jhugen714_pythia8_TuneCP5/*root > $OUTDIR/ZHJ_HToWW_M125
 
-ls $dirMC_UL/BBHToTauTauYbYt/*.root > $OUTDIR/BBHToTauTauYbYt_M125_13TeV
+ls $dirSignal_UL/BBHToTauTauYbYt/*.root > $OUTDIR/BBHToTauTauYbYt_M125_13TeV
 
-ls $dirMC_UL/GluGluToBBHToTauTau/*.root > $OUTDIR/GluGluToBBHToTauTau_M125_13TeV
-ls $dirMC_UL/GluGluToBBHToTauTau-ext1/*.root >> $OUTDIR/GluGluToBBHToTauTau_M125_13TeV
-ls $dirMC_UL/GluGluToBBHToTauTau-ext2/*.root >> $OUTDIR/GluGluToBBHToTauTau_M125_13TeV
+ls $dirSignal_UL/GluGluToBBHToTauTau/*.root > $OUTDIR/GluGluToBBHToTauTau_M125_13TeV
+ls $dirSignal_UL/GluGluToBBHToTauTau-ext1/*.root >> $OUTDIR/GluGluToBBHToTauTau_M125_13TeV
+ls $dirSignal_UL/GluGluToBBHToTauTau-ext2/*.root >> $OUTDIR/GluGluToBBHToTauTau_M125_13TeV
 
-ls $dirMC_UL/BBHToTauTau/*.root > $OUTDIR/BBHToTauTau_M125_13TeV
-ls $dirMC_UL/BBHToTauTau-ext1/*.root >> $OUTDIR/BBHToTauTau_M125_13TeV
-ls $dirMC_UL/BBHToTauTau-ext2/*.root >> $OUTDIR/BBHToTauTau_M125_13TeV
+ls $dirSignal_UL/BBHToTauTau/*.root > $OUTDIR/BBHToTauTau_M125_13TeV
+ls $dirSignal_UL/BBHToTauTau-ext1/*.root >> $OUTDIR/BBHToTauTau_M125_13TeV
+ls $dirSignal_UL/BBHToTauTau-ext2/*.root >> $OUTDIR/BBHToTauTau_M125_13TeV
+
+ls $dirSignal_UL/GluGluHToTauTau_amcatnlo_M125_MiniAOD/*.root > $OUTDIR/GluGluHToTauTau_amcatnlo_M125_MiniAOD
+ls $dirSignal_UL/bbHToTauTau_yb2_M125_MiniAOD/*.root > $OUTDIR/bbHToTauTau_yb2_M125_MiniAOD
+ls $dirSignal_UL/bbHToTauTau_yb2_M125_MiniAODv2/*.root > $OUTDIR/bbHToTauTau_yb2_M125_MiniAODv2
+ls $dirSignal_UL/bbHToTauTau_yt2_M125_MiniAOD/*.root > $OUTDIR/bbHToTauTau_yt2_M125_MiniAOD
+ls $dirSignal_UL/bbHToTauTau_yt2_M125_MiniAODv2/*.root > $OUTDIR/bbHToTauTau_yt2_M125_MiniAODv2
 
 ls $dirMC2/bbHToWWTo2L2Nu_M-125_yb2/*.root > $OUTDIR/BBHToWW_M125_13TeV
 
