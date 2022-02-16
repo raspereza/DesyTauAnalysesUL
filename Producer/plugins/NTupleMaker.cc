@@ -1095,6 +1095,7 @@ void NTupleMaker::beginJob(){
       tree->Branch("genparticles_lheWPt", &genparticles_lheWPt, "genparticles_lheWPt/F");
       tree->Branch("genparticles_noutgoing", &genparticles_noutgoing, "genparticles_noutgoing/i");
       tree->Branch("genparticles_noutgoing_NLO", &genparticles_noutgoing_NLO, "genparticles_noutgoing_NLO/I");
+      tree->Branch("genparticles_nbjets",&genparticles_nbjets, "genparticles_nbjets/I");
       tree->Branch("genparticles_count", &genparticles_count, "genparticles_count/i");
       tree->Branch("genparticles_e", genparticles_e, "genparticles_e[genparticles_count]/F");
       tree->Branch("genparticles_px", genparticles_px, "genparticles_px[genparticles_count]/F");
@@ -1738,6 +1739,7 @@ void NTupleMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
   errors = 0;
   trigobject_count = 0;
   mvamet_count = 0;
+  genparticles_nbjets = 0;
 
   bool takeevent = true;
 
@@ -4563,6 +4565,10 @@ unsigned int NTupleMaker::AddPFJets(const edm::Event& iEvent, const edm::EventSe
 
       for(unsigned i = 0 ; i < pfjets->size() ; i++)
 	{
+	  
+	  int flavor = (*pfjets)[i].hadronFlavour();
+          if (flavor==5||flavor==-5)
+            genparticles_nbjets++;
 
 	  if(pfjet_count == M_jetmaxcount){
 	    cerr << "number of pfjet > M_jetmaxcount. They are missing." << endl;
